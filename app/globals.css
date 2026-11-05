@@ -194,3 +194,12 @@ main [data-slot="card"]:hover {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-panel { background: rgba(22, 29, 38, .9); }
 }
+
+/* cursor pixel do kit: seta + nuvem; foguete em links e botões; estrela ao clicar. Ponta da seta = ponto do clique */
+@media (pointer: fine) {
+  html, body { cursor: var(--cursor-seta), auto; }
+  a, button, [role="button"], summary, label, select, video, iframe { cursor: var(--cursor-link), pointer; }
+  html:active, body:active { cursor: var(--cursor-clique), auto; }
+  a:active, button:active, [role="button"]:active { cursor: var(--cursor-clique), pointer; }
+  input, textarea, [contenteditable="true"] { cursor: text; }
+}

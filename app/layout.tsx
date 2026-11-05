@@ -4,6 +4,7 @@ import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
+import { asset } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 // fallback: sem isso, se a fonte não carregar, o navegador cai no padrão (serifado) em sistemas sem Arial (Linux)
@@ -47,7 +48,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning className={cn("antialiased", fontSans.variable, fontMono.variable)}>
+    <html
+      lang="pt-BR"
+      suppressHydrationWarning
+      className={cn("antialiased", fontSans.variable, fontMono.variable)}
+      style={
+        {
+          "--cursor-seta": `url("${asset("/cursor/seta.png")}") 1 1`,
+          "--cursor-link": `url("${asset("/cursor/link.png")}") 1 1`,
+          "--cursor-clique": `url("${asset("/cursor/clique.png")}") 1 1`,
+        } as React.CSSProperties
+      }
+    >
       <body>
         <ThemeProvider forcedTheme="dark">{children}</ThemeProvider>
       </body>
