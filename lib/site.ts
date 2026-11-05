@@ -13,11 +13,5 @@ export function shortUrl(url: string) {
   return url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")
 }
 
-export const nav = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#apresentacoes", label: "Apresentações" },
-  { href: "#evento", label: "Próximo evento" },
-  { href: "#certificacoes", label: "Certificações" },
-  { href: "#equipe", label: "Equipe" },
-  { href: "#parceiros", label: "Parceiros" },
-]
+/** Seções do menu (o texto de cada uma está no dicionário do idioma, em nav). */
+export const nav = ["sobre", "apresentacoes", "evento", "certificacoes", "equipe", "parceiros"] as const

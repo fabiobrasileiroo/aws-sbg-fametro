@@ -4,10 +4,11 @@ import { ArrowUpIcon } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
 
 import { buttonVariants } from "@/components/ui/button"
+import { type Locale, dictionaries } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 /** Botão flutuante "voltar ao topo" no canto inferior direito; aparece depois de rolar a página. */
-export function GoToTop() {
+export function GoToTop({ locale }: { locale: Locale }) {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export function GoToTop() {
     <button
       type="button"
       onClick={subir}
-      aria-label="Voltar ao topo"
+      aria-label={dictionaries[locale].toTop}
       tabIndex={show ? 0 : -1}
       aria-hidden={!show}
       className={cn(

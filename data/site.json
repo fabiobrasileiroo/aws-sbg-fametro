@@ -11,6 +11,7 @@
     {
       "nome": "Fábio Henrique Mendes Brasileiro",
       "papel": "AWS Student Builder Group Leader",
+      "papelEn": "AWS Student Builder Group Leader",
       "foto": "/img/pessoas/fabio-brasileiro.jpg",
       "links": [
         "https://www.linkedin.com/in/fabiobrasileiro/",
@@ -20,6 +21,7 @@
     {
       "nome": "Heloisa Cativo",
       "papel": "Core Team",
+      "papelEn": "Core Team",
       "foto": "/img/pessoas/heloisa.jpg",
       "links": [
         "https://www.linkedin.com/in/helenacativo/"
@@ -28,6 +30,7 @@
     {
       "nome": "Vitor Teixeira",
       "papel": "Core Team",
+      "papelEn": "Core Team",
       "foto": "/img/pessoas/vitor-teixeira.jpg",
       "links": [
         "https://www.linkedin.com/in/vitorteixeiraa/"
@@ -36,6 +39,7 @@
     {
       "nome": "Geovana",
       "papel": "Core Team",
+      "papelEn": "Core Team",
       "foto": "/img/pessoas/geovana.jpg",
       "links": [
         "https://www.linkedin.com/in/geovana-graziela-lopes-a0077b285/"
@@ -44,6 +48,7 @@
     {
       "nome": "Márcio Lopes “Spiderweb”",
       "papel": "Core Team • SBCL (programa da AWS)",
+      "papelEn": "Core Team • SBCL (AWS program)",
       "foto": "/img/pessoas/marcio-principal-quadrada.jpg",
       "links": [
         "https://www.linkedin.com/in/marciospider"
@@ -52,6 +57,7 @@
     {
       "nome": "Eduarda Almeida",
       "papel": "Core Team",
+      "papelEn": "Core Team",
       "foto": "/img/pessoas/eduarda.jpg",
       "links": [
         "https://www.linkedin.com/in/eduarda-almeida-3629a71ba/"
@@ -62,6 +68,7 @@
     {
       "nome": "Prof. Aguinaldo",
       "papel": "Professor Orientador (Faculty Advisor)",
+      "papelEn": "Faculty Advisor",
       "foto": "/img/pessoas/aguinaldo_professor.jpg",
       "links": [
         "https://www.linkedin.com/in/aguinaldoneto/"
@@ -70,6 +77,7 @@
     {
       "nome": "Prof. Alexsander Faria",
       "papel": "Professor apoiador do projeto",
+      "papelEn": "Supporting professor",
       "foto": "/img/pessoas/alexsander.jpg",
       "links": [
         "https://www.linkedin.com/in/alexsandfarias/"
@@ -80,36 +88,42 @@
     {
       "nome": "NorteJS",
       "tipo": "Comunidade JavaScript",
+      "tipoEn": "JavaScript community",
       "url": "https://nortejs.js.org/",
       "logo": "/img/parceiros/norte_js_logo_white.jpg"
     },
     {
       "nome": "PHP Manaus",
       "tipo": "Comunidade PHP",
+      "tipoEn": "PHP community",
       "url": "https://phpmanaus.com.br/",
       "logo": "/img/parceiros/php-manaus-fundo-claro.jpg"
     },
     {
       "nome": "Java Amazonas",
       "tipo": "Comunidade Java",
+      "tipoEn": "Java community",
       "url": "https://javaamazonas.com.br/",
       "logo": "/img/parceiros/java-amazonas.jpg"
     },
     {
       "nome": "AWS User Group Manaus",
       "tipo": "AWS User Group",
+      "tipoEn": "AWS User Group",
       "url": "https://www.instagram.com/awsgroupmanaus/",
       "logo": "/img/parceiros/aws-user-group-manaus.jpg"
     },
     {
       "nome": "Orion",
       "tipo": "Startup",
+      "tipoEn": "Startup",
       "url": "https://www.instagram.com/startup.orion/",
       "logo": "/img/parceiros/orion.jpg"
     },
     {
       "nome": "Rovee",
       "tipo": "Fintech",
+      "tipoEn": "Fintech",
       "url": "https://roveefinance.online/",
       "logo": "/img/parceiros/rovee-icon.png"
     }
@@ -118,12 +132,14 @@
     {
       "nome": "Centro Universitário Fametro",
       "tipo": "Sede do grupo",
+      "tipoEn": "The group's home campus",
       "url": "https://www.fametro.edu.br/",
       "logo": "/img/instituicoes/fametro-logo.png"
     },
     {
       "nome": "CEI – Senac Chapada",
       "tipo": "Centro Especializado de Informática do Senac Amazonas",
+      "tipoEn": "Senac Amazonas Specialized Computing Center",
       "url": "https://am.senac.br/curso-unidade/senac-chapada/",
       "logo": "/img/instituicoes/senac-am-branco.png"
     }
@@ -132,6 +148,8 @@
     "local": "CEI – Senac Chapada",
     "descricao": "Centro Especializado de Informática do Senac Amazonas, em Manaus",
     "data": "Em breve",
+    "descricaoEn": "Senac Amazonas Specialized Computing Center, in Manaus",
+    "dataEn": "Coming soon",
     "logo": "/img/eventos/senac-am-branco.png"
   },
   "certificacoes": [
@@ -139,6 +157,7 @@
       "nivel": "Fundamentos",
       "en": "Foundational",
       "nota": "Comece aqui: sem pré-requisito",
+      "notaEn": "Start here: no prerequisites",
       "itens": [
         {
           "nome": "Cloud Practitioner",
@@ -154,6 +173,7 @@
       "nivel": "Associado",
       "en": "Associate",
       "nota": "Cerca de 1 ano de prática",
+      "notaEn": "About 1 year of hands-on experience",
       "itens": [
         {
           "nome": "Solutions Architect",
@@ -181,6 +201,7 @@
       "nivel": "Profissional",
       "en": "Professional",
       "nota": "Cerca de 2 anos de prática",
+      "notaEn": "About 2 years of hands-on experience",
       "itens": [
         {
           "nome": "Solutions Architect",
@@ -200,6 +221,7 @@
       "nivel": "Especialidade",
       "en": "Specialty",
       "nota": "Aprofundamento em uma área",
+      "notaEn": "Deep dive into one domain",
       "itens": [
         {
           "nome": "Security",
@@ -217,6 +239,8 @@
       "arquivo": "/slides/apresentacao_auditorio_fametro.html",
       "titulo": "AWS Student Builder Group da Fametro - Apresentação no Auditório",
       "descricao": "Apresentação de 20 minutos no auditório da Fametro: nuvem, IA, o programa, certificações e como participar.",
+      "tituloEn": "AWS Student Builder Group at Fametro - Auditorium talk",
+      "descricaoEn": "A 20-minute talk in the Fametro auditorium (in Portuguese): cloud, AI, the program, certifications and how to join.",
       "slides": 24
     }
   ],
