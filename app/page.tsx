@@ -2,6 +2,8 @@
 import { ArrowSquareOutIcon, CertificateIcon, CloudIcon, DeviceMobileIcon, PlayIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr"
 
 import { ExternalLink } from "@/components/site/external-link"
+import { HeroVoxels } from "@/components/site/hero-voxels"
+import { ScrollEffects } from "@/components/site/scroll-effects"
 import { SiteHeader } from "@/components/site/site-header"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -20,7 +22,7 @@ function Secao({ id, titulo, eyebrow, children, className }: { id: string; titul
   return (
     <section id={id} aria-labelledby={`${id}-titulo`} className={cn("scroll-mt-20 border-b border-border py-20", className)}>
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4">
-        <div className="flex flex-col gap-3">
+        <div data-reveal className="flex flex-col gap-3">
           <p className="font-heading text-sm font-semibold tracking-widest text-aws-orange uppercase">{eyebrow}</p>
           <h2 id={`${id}-titulo`} className="text-3xl font-semibold md:text-5xl">{titulo}</h2>
         </div>
@@ -36,11 +38,14 @@ export default function Page() {
       <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-primary focus:p-3 focus:text-primary-foreground">
         Pular para o conteúdo
       </a>
+      <ScrollEffects />
       <SiteHeader />
       <main id="conteudo">
         {/* início */}
         <section id="inicio" aria-labelledby="inicio-titulo" className="relative overflow-hidden border-b border-border bg-pixel-grid">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_1fr] md:py-28">
+          <HeroVoxels />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/20" />
+          <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_1fr] md:py-28">
             <div className="flex flex-col gap-6">
               <Badge variant="outline" className="w-fit">Centro Universitário Fametro • Manaus</Badge>
               <h1 id="inicio-titulo" className="text-4xl leading-tight font-semibold md:text-6xl">
@@ -79,11 +84,11 @@ export default function Page() {
         </section>
 
         {/* sobre */}
-        <Secao id="sobre" eyebrow="O que é" titulo="Não é um curso. É uma comunidade.">
+        <Secao id="sobre" eyebrow="O que é" titulo="Aprender construindo, em comunidade.">
           <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground">
             O AWS Student Builder Groups é um programa oficial da AWS com mais de 1.000 grupos no mundo, liderados por estudantes. Na Fametro, o grupo já existe: encontros práticos, gratuitos, com apoio de professores e de comunidades parceiras.
           </p>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div data-reveal-stagger className="grid gap-4 md:grid-cols-3">
             {[
               { icon: CloudIcon, cor: "text-aws-orange", t: "Prática real", d: "Laboratórios no AWS Builder Center e no Skill Builder: você constrói projetos de verdade na nuvem." },
               { icon: UsersThreeIcon, cor: "text-aws-blue", t: "Comunidade e mentoria", d: "Contato com profissionais das comunidades de Manaus, networking e portfólio para estágio e emprego." },
@@ -98,15 +103,17 @@ export default function Page() {
               </Card>
             ))}
           </div>
-          <figure className="flex flex-col gap-3">
-            <img src={asset(site.fotos.auditorio)} alt="Auditório da Fametro lotado de alunos na primeira apresentação do grupo" className="aspect-[16/7] w-full border border-border object-cover" />
+          <figure data-reveal className="flex flex-col gap-3">
+            <div className="overflow-hidden border border-border">
+            <img data-parallax src={asset(site.fotos.auditorio)} alt="Auditório da Fametro lotado de alunos na primeira apresentação do grupo" className="aspect-[16/7] w-full object-cover" />
+            </div>
             <figcaption className="text-sm text-muted-foreground">Primeira apresentação do grupo no auditório da Fametro.</figcaption>
           </figure>
         </Secao>
 
         {/* apresentações */}
         <Secao id="apresentacoes" eyebrow="Apresentações" titulo="Slides interativos">
-          <div className="flex flex-col gap-8">
+          <div data-reveal-stagger className="flex flex-col gap-8">
             {site.apresentacoes.map((deck) => (
               <Card key={deck.arquivo} className="overflow-hidden">
                 <div className="aspect-video w-full border-b border-border bg-black">
@@ -137,7 +144,7 @@ export default function Page() {
 
         {/* certificações */}
         <Secao id="certificacoes" eyebrow="Caminho de certificação" titulo="12 certificações AWS, quatro níveis">
-          <div className="grid gap-4 md:grid-cols-4">
+          <div data-reveal-stagger data-badges className="grid gap-4 md:grid-cols-4">
             {site.certificacoes.map((n, i) => (
               <Card key={n.nivel}>
                 <div className={cn("h-2 w-full", NIVEL_COR[i])} aria-hidden="true" />
@@ -166,24 +173,24 @@ export default function Page() {
 
         {/* equipe */}
         <Secao id="equipe" eyebrow="Quem faz acontecer" titulo="Core Team e professores">
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-reveal-stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[...site.equipe, ...site.professores].map((p) => (
-              <li key={p.nome}>
-                <Card className="h-full">
+              <li key={p.nome} className="min-w-0">
+                <Card className="h-full min-w-0">
                   <CardHeader className="flex flex-row items-center gap-4">
                     <Avatar className="size-16">
                       <AvatarImage src={asset(p.foto)} alt="" />
                       <AvatarFallback>{iniciais(p.nome)}</AvatarFallback>
                     </Avatar>
                     <div className="flex min-w-0 flex-col gap-1">
-                      <CardTitle className="text-base">{p.nome}</CardTitle>
-                      <CardDescription>{p.papel}</CardDescription>
+                      <CardTitle className="text-base break-words">{p.nome}</CardTitle>
+                      <CardDescription className="break-words">{p.papel}</CardDescription>
                     </div>
                   </CardHeader>
                   {p.links.length > 0 && (
                     <CardContent className="flex flex-col gap-1 text-sm">
                       {p.links.map((l) => (
-                        <ExternalLink key={l} href={l} className="truncate font-mono">{shortUrl(l)}</ExternalLink>
+                        <ExternalLink key={l} href={l} className="block max-w-full truncate font-mono">{shortUrl(l)}</ExternalLink>
                       ))}
                     </CardContent>
                   )}
@@ -195,17 +202,17 @@ export default function Page() {
 
         {/* parceiros */}
         <Secao id="parceiros" eyebrow="Ecossistema local" titulo="Comunidades e parceiros">
-          <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+          <ul data-reveal-stagger className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
             {site.parceiros.map((p) => (
-              <li key={p.nome}>
-                <Card className="h-full">
+              <li key={p.nome} className="min-w-0">
+                <Card className="h-full min-w-0">
                   <CardHeader className="flex flex-col items-start gap-3">
                     <img src={asset(p.logo)} alt="" className="size-16 bg-white object-contain p-1" />
                     <CardTitle className="text-base">{p.nome}</CardTitle>
                     <CardDescription>{p.tipo}</CardDescription>
                   </CardHeader>
                   <CardFooter className="mt-auto text-sm">
-                    <ExternalLink href={p.url} className="truncate font-mono">{shortUrl(p.url)}</ExternalLink>
+                    <ExternalLink href={p.url} className="block max-w-full truncate font-mono">{shortUrl(p.url)}</ExternalLink>
                   </CardFooter>
                 </Card>
               </li>
@@ -216,7 +223,7 @@ export default function Page() {
         {/* chamada */}
         <section aria-labelledby="cta-titulo" className="bg-pixel-grid py-20">
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-[1fr_auto]">
-            <div className="flex flex-col gap-5">
+            <div data-reveal className="flex flex-col gap-5">
               <h2 id="cta-titulo" className="text-3xl font-semibold md:text-5xl">Bora construir juntos?</h2>
               <p lang="en" className="text-xl text-aws-orange">Want to build the future? Join the club.</p>
               <p className="max-w-xl text-lg text-muted-foreground">Entre no grupo pelo Meetup para receber o aviso de cada encontro e fazer sua inscrição.</p>
