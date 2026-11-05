@@ -39,65 +39,103 @@ export function ScrollEffects() {
         gsap.ticker.add(tick)
         gsap.ticker.lagSmoothing(0)
 
-        const ctx = gsap.context(() => {
-          gsap.to("[data-progress]", {
-            scaleX: 1,
-            ease: "none",
-            scrollTrigger: { start: 0, end: "max", scrub: 0.3 },
-          })
-          gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-            gsap.from(el, {
-              y: 48,
-              autoAlpha: 0,
-              duration: 0.9,
-              ease: "power3.out",
-              scrollTrigger: { trigger: el, start: "top 85%", once: true },
-            })
-          })
-          gsap.utils
+        // cada animação é criada numa tarefa curta, em tempo ocioso: o mesmo efeito, sem travar a página
+        const ctx = gsap.context(() => {})
+        const tasks: (() => void)[] = [
+          () =>
+            gsap.to("[data-progress]", {
+              scaleX: 1,
+              ease: "none",
+              scrollTrigger: { start: 0, end: "max", scrub: 0.3 },
+            }),
+          ...gsap.utils
+            .toArray<HTMLElement>("[data-reveal]")
+            .map(
+              (el) => () =>
+                gsap.from(el, {
+                  y: 48,
+                  autoAlpha: 0,
+                  duration: 0.9,
+                  ease: "power3.out",
+                  scrollTrigger: { trigger: el, start: "top 85%", once: true },
+                })
+            ),
+          ...gsap.utils
             .toArray<HTMLElement>("[data-reveal-stagger]")
-            .forEach((el) => {
-              gsap.from(el.children, {
-                y: 56,
-                autoAlpha: 0,
-                duration: 0.7,
-                ease: "power3.out",
-                stagger: 0.08,
-                scrollTrigger: { trigger: el, start: "top 85%", once: true },
-              })
-            })
-          gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
-            gsap.fromTo(
-              el,
-              { yPercent: -6, scale: 1.08 },
-              {
-                yPercent: 6,
-                scale: 1.08,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: el,
-                  start: "top bottom",
-                  end: "bottom top",
-                  scrub: true,
-                },
-              }
-            )
-          })
-          gsap.utils
+            .map(
+              (el) => () =>
+                gsap.from(el.children, {
+                  y: 56,
+                  autoAlpha: 0,
+                  duration: 0.7,
+                  ease: "power3.out",
+                  stagger: 0.08,
+                  scrollTrigger: { trigger: el, start: "top 85%", once: true },
+                })
+            ),
+          ...gsap.utils
+            .toArray<HTMLElement>("[data-parallax]")
+            .map(
+              (el) => () =>
+                gsap.fromTo(
+                  el,
+                  { yPercent: -6, scale: 1.08 },
+                  {
+                    yPercent: 6,
+                    scale: 1.08,
+                    ease: "none",
+                    scrollTrigger: {
+                      trigger: el,
+                      start: "top bottom",
+                      end: "bottom top",
+                      scrub: true,
+                    },
+                  }
+                )
+            ),
+          ...gsap.utils
             .toArray<HTMLElement>("[data-badges] img")
-            .forEach((el, i) => {
-              gsap.from(el, {
-                scale: 0,
-                rotation: -30,
-                duration: 0.5,
-                ease: "back.out(2.2)",
-                delay: (i % 5) * 0.05,
-                scrollTrigger: { trigger: el, start: "top 90%", once: true },
-              })
-            })
-        })
+            .map(
+              (el, i) => () =>
+                gsap.from(el, {
+                  scale: 0,
+                  rotation: -30,
+                  duration: 0.5,
+                  ease: "back.out(2.2)",
+                  delay: (i % 5) * 0.05,
+                  scrollTrigger: { trigger: el, start: "top 90%", once: true },
+                })
+            ),
+        ]
+        let chunkId: number | null = null
+        const runChunk = (deadline?: { timeRemaining: () => number }) => {
+          const until = performance.now() + 8
+          while (
+            tasks.length &&
+            !disposed &&
+            (deadline
+              ? deadline.timeRemaining() > 2
+              : performance.now() < until)
+          ) {
+            const task = tasks.shift()!
+            ctx.add(task)
+          }
+          if (tasks.length && !disposed) {
+            chunkId = w.requestIdleCallback
+              ? w.requestIdleCallback(runChunk as () => void, { timeout: 500 })
+              : window.setTimeout(runChunk, 16)
+          } else {
+            chunkId = null
+            ScrollTrigger.refresh()
+          }
+        }
+        runChunk()
 
         cleanup = () => {
+          if (chunkId !== null) {
+            w.cancelIdleCallback?.(chunkId)
+            clearTimeout(chunkId)
+          }
           ctx.revert()
           gsap.ticker.remove(tick)
           lenis.destroy()
