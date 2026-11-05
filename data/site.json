@@ -71,7 +71,9 @@
       "nome": "Prof. Alexsander Faria",
       "papel": "Professor apoiador do projeto",
       "foto": "/img/pessoas/alexsander.jpg",
-      "links": []
+      "links": [
+        "https://www.linkedin.com/in/alexsandfarias/"
+      ]
     }
   ],
   "parceiros": [
