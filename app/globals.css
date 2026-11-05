@@ -227,7 +227,9 @@ main [data-slot="card"]:hover {
 /* ---------- "Quem é esse lugar?" (estilo "Quem é esse Pokémon?") ---------- */
 .who-card { position: relative; overflow: hidden; isolation: isolate; border: 1px solid rgba(255, 255, 255, .14);
   background: radial-gradient(circle at 50% 55%, #1E3A5F 0%, #161D26 70%); }
-.who-rays { position: absolute; inset: -60%; z-index: 0;
+.who-rays { position: absolute; z-index: 0;
+  /* quadrado centralizado maior que a diagonal do cartão: girando, cobre o cartão inteiro em qualquer largura */
+  left: 50%; top: 50%; translate: -50% -50%; width: 200%; aspect-ratio: 1; min-height: 200%;
   background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255, 153, 0, .22) 0deg 10deg, rgba(66, 180, 255, .08) 10deg 20deg);
   mask-image: radial-gradient(circle at 50% 50%, #000 15%, transparent 60%);
   -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 15%, transparent 60%);
