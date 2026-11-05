@@ -6,8 +6,17 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 import { cn } from "@/lib/utils"
 
-const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" })
-const fontMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
+// fallback: sem isso, se a fonte não carregar, o navegador cai no padrão (serifado) em sistemas sem Arial (Linux)
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  fallback: ["system-ui", "Segoe UI", "Roboto", "Noto Sans", "Helvetica Neue", "Arial", "sans-serif"],
+})
+const fontMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "Liberation Mono", "monospace"],
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

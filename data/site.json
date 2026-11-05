@@ -202,6 +202,7 @@
   ],
   "fotos": {
     "auditorio": "/img/fotos/auditorio-fametro-apresentacao.jpg",
+    "poster": "/img/fotos/poster-teaser.jpg",
     "qrMeetup": "/img/fotos/qr-meetup-aws-sbg-fametro.png"
   }
 }

@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-img-element -- export estático para o GitHub Pages: imagens servidas direto de public/ */
+import { preload } from "react-dom"
 import { ArrowSquareOutIcon, CertificateIcon, CloudIcon, DeviceMobileIcon, PlayIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr"
 
 import { ExternalLink } from "@/components/site/external-link"
+import { LazyIframe } from "@/components/site/lazy-iframe"
 import { SceneBackground } from "@/components/site/scene-background"
 import { ScrollEffects } from "@/components/site/scroll-effects"
 import { SiteHeader } from "@/components/site/site-header"
+import { TeaserVideo } from "@/components/site/teaser-video"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
@@ -49,6 +52,8 @@ function Secao({ id, titulo, eyebrow, children, className }: { id: string; titul
 }
 
 export default function Page() {
+  // o pôster do vídeo é o maior elemento da primeira tela (LCP): baixa primeiro
+  preload(asset(site.fotos.poster), { as: "image", fetchPriority: "high" })
   return (
     <>
       <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-primary focus:p-3 focus:text-primary-foreground">
@@ -81,17 +86,10 @@ export default function Page() {
               </div>
             </div>
             <figure className="flex flex-col gap-3">
-              <video
-                className="aspect-video w-full border border-border bg-black"
+              <TeaserVideo
                 src={asset("/video/teaser_aws_sbg_fametro.mp4")}
-                poster={asset(site.fotos.auditorio)}
-                controls
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                aria-label="Teaser em vídeo do AWS Student Builder Group da Fametro"
+                poster={asset(site.fotos.poster)}
+                label="Teaser em vídeo do AWS Student Builder Group da Fametro"
               />
               <figcaption className="text-sm text-muted-foreground">
                 Teaser com trilha original. Versão animada interativa: <a className="underline underline-offset-4 hover:text-primary" href={asset("/teaser/")}>abrir o teaser</a>.
@@ -122,7 +120,7 @@ export default function Page() {
           </div>
           <figure data-reveal className="flex flex-col gap-3">
             <div className="overflow-hidden border border-border">
-            <img data-parallax src={asset(site.fotos.auditorio)} alt="Auditório da Fametro lotado de alunos na primeira apresentação do grupo" className="aspect-[16/7] w-full object-cover" />
+            <img loading="lazy" decoding="async" data-parallax src={asset(site.fotos.auditorio)} alt="Auditório da Fametro lotado de alunos na primeira apresentação do grupo" className="aspect-[16/7] w-full object-cover" />
             </div>
             <figcaption className="text-sm text-muted-foreground">Primeira apresentação do grupo no auditório da Fametro.</figcaption>
           </figure>
@@ -134,7 +132,7 @@ export default function Page() {
             {site.apresentacoes.map((deck) => (
               <Card key={deck.arquivo} className="overflow-hidden">
                 <div className="aspect-video w-full border-b border-border bg-black">
-                  <iframe src={`${asset(deck.arquivo)}?autoplay=6`} title={`Apresentação: ${deck.titulo}`} className="size-full" loading="lazy" allow="fullscreen" />
+                  <LazyIframe src={`${asset(deck.arquivo)}?autoplay=6`} title={`Apresentação: ${deck.titulo}`} className="size-full" />
                 </div>
                 <CardHeader>
                   <CardTitle className="text-xl">{deck.titulo}</CardTitle>
@@ -173,7 +171,7 @@ export default function Page() {
                   <ul className="flex flex-col gap-3">
                     {n.itens.map((c) => (
                       <li key={c.nome + n.nivel} className="flex items-center gap-3">
-                        <img src={asset(c.selo)} alt="" className="h-12 w-auto" />
+                        <img loading="lazy" decoding="async" src={asset(c.selo)} alt="" className="h-12 w-auto" />
                         <span lang="en" className="font-medium">{c.nome}</span>
                       </li>
                     ))}
@@ -196,7 +194,7 @@ export default function Page() {
                 <Card className="h-full min-w-0">
                   <CardHeader className="flex flex-row items-center gap-4">
                     <Avatar className="size-16">
-                      <AvatarImage src={asset(p.foto)} alt="" />
+                      <AvatarImage src={asset(p.foto)} alt="" loading="lazy" decoding="async" />
                       <AvatarFallback>{iniciais(p.nome)}</AvatarFallback>
                     </Avatar>
                     <div className="flex min-w-0 flex-col gap-1">
@@ -224,7 +222,7 @@ export default function Page() {
               <li key={p.nome} className="min-w-0">
                 <Card className="h-full min-w-0">
                   <CardHeader className="flex flex-col items-start gap-3">
-                    <img src={asset(p.logo)} alt="" className="size-16 bg-white object-contain p-1" />
+                    <img loading="lazy" decoding="async" src={asset(p.logo)} alt="" className="size-16 bg-white object-contain p-1" />
                     <CardTitle className="text-base">{p.nome}</CardTitle>
                     <CardDescription>{p.tipo}</CardDescription>
                   </CardHeader>
@@ -248,7 +246,7 @@ export default function Page() {
                 Entrar no grupo pelo Meetup<span className="sr-only"> (abre em nova aba)</span>
               </a>
             </div>
-            <img src={asset(site.fotos.qrMeetup)} alt="QR code que abre a página do grupo no Meetup" className="size-56 bg-white p-3" />
+            <img loading="lazy" decoding="async" src={asset(site.fotos.qrMeetup)} alt="QR code que abre a página do grupo no Meetup" className="size-56 bg-white p-3" />
           </div>
         </section>
       </main>

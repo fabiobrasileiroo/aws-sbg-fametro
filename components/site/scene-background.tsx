@@ -89,12 +89,20 @@ export function SceneBackground() {
     let disposed = false
     let cleanup = () => {}
 
-    import("three").then((THREE) => {
+    let idleId: number | null = null
+    let timer: ReturnType<typeof setTimeout> | null = null
+    const start = () => import("three").then((THREE) => {
       if (disposed) return
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" })
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25))
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1))
       host.appendChild(renderer.domElement)
+      // WebGL por software (sem GPU) ou economia de dados: quadros estáticos, como em "reduzir movimento"
+      const gl = renderer.getContext()
+      const dbg = gl.getExtension("WEBGL_debug_renderer_info")
+      const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : ""
+      const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        || /swiftshader|llvmpipe|softpipe|software|basic render/i.test(gpu) || !!saveData
 
       const scene = new THREE.Scene()
       const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100)
@@ -180,7 +188,19 @@ export function SceneBackground() {
       focusEls.forEach((el) => { el.addEventListener("pointerenter", on); el.addEventListener("pointerleave", off); el.addEventListener("focusin", on); el.addEventListener("focusout", off) })
 
       let raf = 0
-      const loop = (t: number) => { draw(t); raf = requestAnimationFrame(loop) }
+      let last = 0
+      // 30 quadros por segundo bastam para o movimento lento dos cubos e cortam o trabalho pela metade
+      const loop = (t: number) => {
+        raf = requestAnimationFrame(loop)
+        if (t - last < 32) return
+        last = t
+        draw(t)
+      }
+      const onVisibility = () => {
+        cancelAnimationFrame(raf)
+        if (!document.hidden && !reduce) raf = requestAnimationFrame(loop)
+      }
+      document.addEventListener("visibilitychange", onVisibility)
       resize()
       offset.tx = window.innerWidth >= 768 ? 4.5 : 0
       if (reduce) { for (let i = 0; i < N; i++) cur[i] = { p: [...goal[i].p] as V, s: goal[i].s }; draw(0, true) }
@@ -194,11 +214,21 @@ export function SceneBackground() {
         focusEls.forEach((el) => { el.removeEventListener("pointerenter", on); el.removeEventListener("pointerleave", off); el.removeEventListener("focusin", on); el.removeEventListener("focusout", off) })
         window.removeEventListener("resize", resize)
         window.removeEventListener("pointermove", onMove)
+        document.removeEventListener("visibilitychange", onVisibility)
         geo.dispose(); mat.dispose(); renderer.dispose()
         renderer.domElement.remove()
       }
     })
-    return () => { disposed = true; cleanup() }
+    // começa depois do carregamento (tempo ocioso), para não competir com o primeiro desenho da página
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void }
+    if (w.requestIdleCallback) idleId = w.requestIdleCallback(() => void start(), { timeout: 1500 })
+    else timer = setTimeout(() => void start(), 600)
+    return () => {
+      disposed = true
+      if (idleId !== null) w.cancelIdleCallback?.(idleId)
+      if (timer) clearTimeout(timer)
+      cleanup()
+    }
   }, [])
 
   return (
