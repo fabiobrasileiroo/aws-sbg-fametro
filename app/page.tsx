@@ -2,7 +2,7 @@
 import { ArrowSquareOutIcon, CertificateIcon, CloudIcon, DeviceMobileIcon, PlayIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr"
 
 import { ExternalLink } from "@/components/site/external-link"
-import { HeroVoxels } from "@/components/site/hero-voxels"
+import { SceneBackground } from "@/components/site/scene-background"
 import { ScrollEffects } from "@/components/site/scroll-effects"
 import { SiteHeader } from "@/components/site/site-header"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -20,7 +20,7 @@ const iniciais = (nome: string) =>
 
 function Secao({ id, titulo, eyebrow, children, className }: { id: string; titulo: string; eyebrow: string; children: React.ReactNode; className?: string }) {
   return (
-    <section id={id} aria-labelledby={`${id}-titulo`} className={cn("scroll-mt-20 border-b border-border py-20", className)}>
+    <section id={id} data-scene={id} aria-labelledby={`${id}-titulo`} className={cn("scroll-mt-20 border-b border-border py-20", className)}>
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4">
         <div data-reveal className="flex flex-col gap-3">
           <p className="font-heading text-sm font-semibold tracking-widest text-aws-orange uppercase">{eyebrow}</p>
@@ -38,14 +38,14 @@ export default function Page() {
       <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-primary focus:p-3 focus:text-primary-foreground">
         Pular para o conteúdo
       </a>
+      <SceneBackground />
       <ScrollEffects />
       <SiteHeader />
-      <main id="conteudo">
+      <main id="conteudo" className="relative z-10">
         {/* início */}
-        <section id="inicio" aria-labelledby="inicio-titulo" className="relative overflow-hidden border-b border-border bg-pixel-grid">
-          <HeroVoxels />
+        <section id="inicio" data-scene="inicio" aria-labelledby="inicio-titulo" className="relative overflow-hidden border-b border-border bg-pixel-grid">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/20" />
-          <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_1fr] md:py-28">
+          <div data-blur-bg className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_1fr] md:py-28">
             <div className="flex flex-col gap-6">
               <Badge variant="outline" className="w-fit">Centro Universitário Fametro • Manaus</Badge>
               <h1 id="inicio-titulo" className="text-4xl leading-tight font-semibold md:text-6xl">
@@ -221,7 +221,7 @@ export default function Page() {
         </Secao>
 
         {/* chamada */}
-        <section aria-labelledby="cta-titulo" className="bg-pixel-grid py-20">
+        <section data-scene="cta" aria-labelledby="cta-titulo" className="bg-pixel-grid py-20">
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-[1fr_auto]">
             <div data-reveal className="flex flex-col gap-5">
               <h2 id="cta-titulo" className="text-3xl font-semibold md:text-5xl">Bora construir juntos?</h2>
@@ -235,7 +235,7 @@ export default function Page() {
           </div>
         </section>
       </main>
-      <footer className="border-t border-border py-10">
+      <footer className="relative z-10 border-t border-border bg-background py-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 text-sm text-muted-foreground">
           <Separator />
           <p>
