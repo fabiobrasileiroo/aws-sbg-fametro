@@ -2,7 +2,7 @@
 
 Site oficial do grupo: apresentações interativas, teaser em vídeo, trilha de certificações, equipe e parceiros.
 
-**Site:** https://fabiobrasileiroo.github.io/aws-sbg-fametro/
+**Site:** https://fabiobrasileiro.me/aws-sbg-fametro/
 
 ## Como funciona
 
