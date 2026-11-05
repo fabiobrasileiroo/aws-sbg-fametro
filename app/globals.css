@@ -159,19 +159,21 @@
 
 /* ---------- vidro (glassmorphism / liquid glass) no design do grupo: cantos retos, borda clara, brilho ---------- */
 .glass-panel {
-  position: absolute; inset: -1.5rem; z-index: -1; pointer-events: none;
-  opacity: 0; transform: scale(.985);
-  transition: opacity .45s ease, transform .45s ease;
+  position: absolute; inset: -1.75rem -2rem; z-index: -1; pointer-events: none;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .4s ease, transform .4s ease;
+  /* mesmo vidro dos cartões, com desfoque real do fundo 3D e um brilho suave que segue o mouse */
   background:
-    radial-gradient(420px circle at var(--mx, 30%) var(--my, 20%), rgba(255, 255, 255, .14), transparent 60%),
-    linear-gradient(135deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .02) 45%, rgba(255, 153, 0, .05)),
-    rgba(22, 29, 38, .45);
-  border: 1px solid rgba(255, 255, 255, .16);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 -1px 0 rgba(255, 255, 255, .06), 0 24px 60px rgba(0, 0, 0, .45);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+    radial-gradient(360px circle at var(--mx, 30%) var(--my, 30%), rgba(255, 255, 255, .07), transparent 65%),
+    linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .015) 50%),
+    rgba(27, 35, 46, .62);
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 12px 32px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
-[data-blur-bg]:hover > .glass-panel, [data-blur-bg]:focus-within > .glass-panel { opacity: 1; transform: none; }
+[data-blur-bg]:hover .glass-panel, [data-blur-bg]:focus-within .glass-panel { opacity: 1; transform: none; }
+@media (max-width: 767px) { .glass-panel { inset: -1rem -.75rem; } }
 
 /* cartões: vidro translúcido sobre o fundo já desfocado (sem backdrop-filter por cartão, para não pesar) */
 main [data-slot="card"] {
