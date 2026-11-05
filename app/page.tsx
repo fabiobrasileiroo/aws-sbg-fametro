@@ -173,7 +173,7 @@ export default function Page() {
                 <Card className="h-full min-w-0">
                   <CardHeader className="flex flex-row items-center gap-4">
                     {i.logo ? (
-                      <img loading="lazy" decoding="async" src={asset(i.logo)} alt="" className="h-12 w-auto max-w-32 object-contain" />
+                      <img loading="lazy" decoding="async" src={asset(i.logo)} alt="" className="h-10 w-auto max-w-44 object-contain" />
                     ) : (
                       <BuildingsIcon className="size-12 shrink-0 text-aws-orange" aria-hidden="true" />
                     )}

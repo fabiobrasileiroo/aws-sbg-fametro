@@ -119,13 +119,13 @@
       "nome": "Centro Universitário Fametro",
       "tipo": "Sede do grupo",
       "url": "https://www.fametro.edu.br/",
-      "logo": null
+      "logo": "/img/instituicoes/fametro-logo.png"
     },
     {
       "nome": "CEI – Senac Chapada",
       "tipo": "Centro Especializado de Informática do Senac Amazonas",
       "url": "https://am.senac.br/curso-unidade/senac-chapada/",
-      "logo": "/img/parceiros/senac-am-branco.png"
+      "logo": "/img/instituicoes/senac-am-branco.png"
     }
   ],
   "proximoEvento": {
