@@ -196,8 +196,7 @@ main [data-slot="card"]:hover {
     radial-gradient(40% 45% at 62% 92%, rgba(173, 92, 255, .5), transparent 70%),
     radial-gradient(30% 35% at 10% 85%, rgba(66, 180, 255, .35), transparent 70%);
   filter: blur(28px);
-  animation: glass-drift 14s ease-in-out infinite alternate;
-  will-change: transform;
+  transition: transform 1.2s ease;
 }
 @keyframes glass-drift { from { transform: translate3d(-2%, -1%, 0) scale(1); } to { transform: translate3d(2%, 2%, 0) scale(1.05); } }
 .glass-surface {
@@ -222,4 +221,30 @@ main [data-slot="card"]:hover {
 .px-tr { top: -1px; right: -1px; border-top: 4px solid var(--color-aws-orange); border-right: 4px solid var(--color-aws-orange); }
 .px-bl { bottom: -1px; left: -1px; border-bottom: 4px solid var(--color-aws-orange); border-left: 4px solid var(--color-aws-orange); }
 .px-br { bottom: -1px; right: -1px; border-bottom: 4px solid var(--color-aws-orange); border-right: 4px solid var(--color-aws-orange); }
-@media (prefers-reduced-motion: reduce) { .glass-glow { animation: none; } }
+.glass-frame:hover .glass-glow { animation: glass-drift 6s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) { .glass-frame:hover .glass-glow { animation: none; } }
+
+/* ---------- "Quem é esse lugar?" (estilo "Quem é esse Pokémon?") ---------- */
+.who-card { position: relative; overflow: hidden; isolation: isolate; border: 1px solid rgba(255, 255, 255, .14);
+  background: radial-gradient(circle at 50% 55%, #1E3A5F 0%, #161D26 70%); }
+.who-rays { position: absolute; inset: -60%; z-index: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255, 153, 0, .22) 0deg 10deg, rgba(66, 180, 255, .08) 10deg 20deg);
+  mask-image: radial-gradient(circle at 50% 50%, #000 15%, transparent 60%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 15%, transparent 60%);
+  animation: who-spin 40s linear infinite; }
+@keyframes who-spin { to { transform: rotate(360deg); } }
+.who-stage { position: relative; display: grid; place-items: center; width: min(440px, 80vw); aspect-ratio: 3 / 1;
+  background: none; border: 0; padding: 0; }
+.who-stage:focus-visible { outline: 3px solid var(--color-aws-orange); outline-offset: 8px; }
+.who-logo { width: 100%; height: auto; display: block;
+  filter: brightness(0) drop-shadow(0 0 0 #000) drop-shadow(0 0 18px rgba(66, 180, 255, .55));
+  transition: filter .6s ease, transform .6s cubic-bezier(.2, .8, .2, 1.4); }
+.who-stage:hover .who-logo { transform: scale(1.04); }
+.who-card[data-revealed] .who-logo { filter: drop-shadow(0 0 22px rgba(255, 153, 0, .55)); transform: scale(1.08); }
+.who-question { text-shadow: 0 2px 0 rgba(0, 0, 0, .45); }
+.who-card[data-revealed] .who-question { color: var(--color-aws-orange); }
+@media (prefers-reduced-motion: reduce) { .who-rays { animation: none; } .who-logo { transition: none; } }
+
+/* botão voltar ao topo */
+.go-top { transition: opacity .3s ease, transform .3s ease; }
+@media (prefers-reduced-motion: reduce) { .go-top { transition: none; } }

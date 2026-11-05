@@ -16,6 +16,7 @@ export function shortUrl(url: string) {
 export const nav = [
   { href: "#sobre", label: "Sobre" },
   { href: "#apresentacoes", label: "Apresentações" },
+  { href: "#evento", label: "Próximo evento" },
   { href: "#certificacoes", label: "Certificações" },
   { href: "#equipe", label: "Equipe" },
   { href: "#parceiros", label: "Parceiros" },

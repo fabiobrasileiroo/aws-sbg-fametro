@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element -- export estático para o GitHub Pages: imagens servidas direto de public/ */
 import { preload } from "react-dom"
-import { ArrowSquareOutIcon, CertificateIcon, CloudIcon, DeviceMobileIcon, PlayIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr"
+import { ArrowSquareOutIcon, BuildingsIcon, CertificateIcon, CloudIcon, DeviceMobileIcon, PlayIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr"
 
 import { ExternalLink } from "@/components/site/external-link"
+import { GoToTop } from "@/components/site/go-to-top"
 import { LazyIframe } from "@/components/site/lazy-iframe"
 import { SceneBackground } from "@/components/site/scene-background"
 import { ScrollEffects } from "@/components/site/scroll-effects"
 import { SiteHeader } from "@/components/site/site-header"
 import { TeaserVideo } from "@/components/site/teaser-video"
+import { WhoIsIt } from "@/components/site/who-is-it"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
@@ -163,6 +165,42 @@ export default function Page() {
           </div>
         </Secao>
 
+        {/* instituições parceiras e próximo evento */}
+        <Secao id="instituicoes" eyebrow="Parcerias com instituições" titulo="Onde os encontros acontecem">
+          <ul data-reveal-stagger className="grid gap-4 md:grid-cols-2">
+            {site.instituicoes.map((i) => (
+              <li key={i.nome} className="min-w-0">
+                <Card className="h-full min-w-0">
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    {i.logo ? (
+                      <img loading="lazy" decoding="async" src={asset(i.logo)} alt="" className="h-12 w-auto max-w-32 object-contain" />
+                    ) : (
+                      <BuildingsIcon className="size-12 shrink-0 text-aws-orange" aria-hidden="true" />
+                    )}
+                    <div className="flex min-w-0 flex-col gap-1">
+                      <CardTitle className="text-lg break-words">{i.nome}</CardTitle>
+                      <CardDescription className="break-words">{i.tipo}</CardDescription>
+                    </div>
+                  </CardHeader>
+                  <CardFooter className="mt-auto text-sm">
+                    <ExternalLink href={i.url} className="block max-w-full truncate font-mono">{shortUrl(i.url)}</ExternalLink>
+                  </CardFooter>
+                </Card>
+              </li>
+            ))}
+          </ul>
+          {site.proximoEvento && (
+            <div id="evento" data-reveal className="scroll-mt-24">
+              <WhoIsIt
+                logo={asset(site.proximoEvento.logo)}
+                local={site.proximoEvento.local}
+                descricao={site.proximoEvento.descricao}
+                data={site.proximoEvento.data}
+              />
+            </div>
+          )}
+        </Secao>
+
         {/* certificações */}
         <Secao id="certificacoes" eyebrow="Caminho de certificação" titulo="12 certificações AWS, quatro níveis">
           <div data-reveal-stagger data-badges className="grid gap-4 md:grid-cols-4">
@@ -268,6 +306,7 @@ export default function Page() {
           <p>Comunidade estudantil do programa AWS Student Builder Groups. Este não é um site oficial da Amazon Web Services.</p>
         </div>
       </footer>
+      <GoToTop />
     </>
   )
 }
