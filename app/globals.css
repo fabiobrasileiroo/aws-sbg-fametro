@@ -197,6 +197,7 @@ main [data-slot="card"]:hover {
     radial-gradient(30% 35% at 10% 85%, rgba(66, 180, 255, .35), transparent 70%);
   filter: blur(28px);
   animation: glass-drift 14s ease-in-out infinite alternate;
+  will-change: transform;
 }
 @keyframes glass-drift { from { transform: translate3d(-2%, -1%, 0) scale(1); } to { transform: translate3d(2%, 2%, 0) scale(1.05); } }
 .glass-surface {
