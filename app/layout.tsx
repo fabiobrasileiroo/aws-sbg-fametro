@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { preload } from "react-dom"
 import { Inter, JetBrains_Mono } from "next/font/google"
 
 import "./globals.css"
@@ -47,6 +48,8 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  // cursores baixados antes do primeiro clique (sem piscar ao clicar e soltar)
+  for (const c of ["seta", "link", "clique"]) preload(asset(`/cursor/${c}.png`), { as: "image" })
   return (
     <html
       lang="pt-BR"
@@ -55,8 +58,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       style={
         {
           "--cursor-seta": `url("${asset("/cursor/seta.png")}") 1 1`,
-          "--cursor-link": `url("${asset("/cursor/link.png")}") 1 1`,
-          "--cursor-clique": `url("${asset("/cursor/clique.png")}") 1 1`,
+          "--cursor-link": `url("${asset("/cursor/link.png")}") 11 1`,
+          "--cursor-clique": `url("${asset("/cursor/clique.png")}") 11 2`,
         } as React.CSSProperties
       }
     >

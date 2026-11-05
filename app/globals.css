@@ -154,27 +154,10 @@
 .scene-bg { transition: filter .5s ease, opacity .5s ease; }
 .scene-bg:not([data-current="inicio"]) { filter: blur(10px); opacity: .42; }
 /* na abertura o fundo fica nítido; ao passar o mouse, um painel de vidro aparece atrás do conteúdo */
-.scene-bg[data-current="inicio"][data-hover] { opacity: .85; }
+.scene-bg[data-current="inicio"][data-hover] { filter: blur(8px); opacity: .55; }
 @media (prefers-reduced-motion: reduce) { .scene-bg { transition: none; } }
 
 /* ---------- vidro (glassmorphism / liquid glass) no design do grupo: cantos retos, borda clara, brilho ---------- */
-.glass-panel {
-  position: absolute; inset: -1.75rem -2rem; z-index: -1; pointer-events: none;
-  opacity: 0; transform: translateY(6px);
-  transition: opacity .4s ease, transform .4s ease;
-  /* mesmo vidro dos cartões, com desfoque real do fundo 3D e um brilho suave que segue o mouse */
-  background:
-    radial-gradient(360px circle at var(--mx, 30%) var(--my, 30%), rgba(255, 255, 255, .07), transparent 65%),
-    linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .015) 50%),
-    rgba(27, 35, 46, .62);
-  border: 1px solid rgba(255, 255, 255, .12);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 12px 32px rgba(0, 0, 0, .28);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-[data-blur-bg]:hover .glass-panel, [data-blur-bg]:focus-within .glass-panel { opacity: 1; transform: none; }
-@media (max-width: 767px) { .glass-panel { inset: -1rem -.75rem; } }
-
 /* cartões: vidro translúcido sobre o fundo já desfocado (sem backdrop-filter por cartão, para não pesar) */
 main [data-slot="card"] {
   background:
@@ -189,17 +172,53 @@ main [data-slot="card"]:hover {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 16px 40px rgba(0, 0, 0, .35);
 }
 @media (prefers-reduced-motion: reduce) {
-  .glass-panel, main [data-slot="card"] { transition: none; }
+  main [data-slot="card"] { transition: none; }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass-panel { background: rgba(22, 29, 38, .9); }
+  .glass-surface { background: rgba(30, 39, 51, .92) !important; }
 }
 
 /* cursor pixel do kit: seta + nuvem; foguete em links e botões; estrela ao clicar. Ponta da seta = ponto do clique */
 @media (pointer: fine) {
   html, body { cursor: var(--cursor-seta), auto; }
   a, button, [role="button"], summary, label, select, video, iframe { cursor: var(--cursor-link), pointer; }
-  html:active, body:active { cursor: var(--cursor-clique), auto; }
-  a:active, button:active, [role="button"]:active { cursor: var(--cursor-clique), pointer; }
+  a:active, button:active, [role="button"]:active, summary:active, label:active { cursor: var(--cursor-clique), pointer; }
   input, textarea, [contenteditable="true"] { cursor: text; }
 }
+
+/* ---------- moldura de vidro do vídeo (glassmorphism): luz colorida atrás, vidro fosco, borda em degradê, cantos pixel ---------- */
+.glass-frame { position: relative; isolation: isolate; padding: 16px; }
+.glass-glow {
+  position: absolute; inset: -12% -8%; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(38% 45% at 18% 22%, rgba(255, 153, 0, .55), transparent 70%),
+    radial-gradient(35% 42% at 86% 30%, rgba(255, 87, 233, .45), transparent 70%),
+    radial-gradient(40% 45% at 62% 92%, rgba(173, 92, 255, .5), transparent 70%),
+    radial-gradient(30% 35% at 10% 85%, rgba(66, 180, 255, .35), transparent 70%);
+  filter: blur(28px);
+  animation: glass-drift 14s ease-in-out infinite alternate;
+}
+@keyframes glass-drift { from { transform: translate3d(-2%, -1%, 0) scale(1); } to { transform: translate3d(2%, 2%, 0) scale(1.05); } }
+.glass-surface {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .05) 45%, rgba(255, 255, 255, .02));
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 -1px 0 rgba(255, 255, 255, .06);
+}
+/* borda de 1px em degradê: mais clara no alto à esquerda, como luz batendo no vidro */
+.glass-surface::after {
+  content: ""; position: absolute; inset: 0; padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .65), rgba(255, 255, 255, .1) 40%, rgba(255, 153, 0, .55));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.glass-frame > video, .glass-frame > figcaption { position: relative; }
+.glass-frame > figcaption { color: #E4E7EC; }
+/* cantos em pixel (assinatura do template) */
+.px-corner { position: absolute; width: 14px; height: 14px; pointer-events: none; }
+.px-tl { top: -1px; left: -1px; border-top: 4px solid var(--color-aws-orange); border-left: 4px solid var(--color-aws-orange); }
+.px-tr { top: -1px; right: -1px; border-top: 4px solid var(--color-aws-orange); border-right: 4px solid var(--color-aws-orange); }
+.px-bl { bottom: -1px; left: -1px; border-bottom: 4px solid var(--color-aws-orange); border-left: 4px solid var(--color-aws-orange); }
+.px-br { bottom: -1px; right: -1px; border-bottom: 4px solid var(--color-aws-orange); border-right: 4px solid var(--color-aws-orange); }
+@media (prefers-reduced-motion: reduce) { .glass-glow { animation: none; } }

@@ -69,7 +69,6 @@ export default function Page() {
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/20" />
           <div data-blur-bg className="relative isolate mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_1fr] md:py-28">
             <div className="relative isolate flex flex-col gap-6">
-              <div aria-hidden="true" className="glass-panel" />
               <Badge variant="outline" className="w-fit">Centro Universitário Fametro • Manaus</Badge>
               <h1 id="inicio-titulo" className="text-4xl leading-tight font-semibold md:text-6xl">
                 AWS Student Builder Group <span className="text-aws-orange">da Fametro</span>
@@ -86,7 +85,13 @@ export default function Page() {
                 </a>
               </div>
             </div>
-            <figure className="flex flex-col gap-3">
+            <figure className="glass-frame flex flex-col gap-3">
+              <span aria-hidden="true" className="glass-glow" />
+              <span aria-hidden="true" className="glass-surface" />
+              <span aria-hidden="true" className="px-corner px-tl" />
+              <span aria-hidden="true" className="px-corner px-tr" />
+              <span aria-hidden="true" className="px-corner px-bl" />
+              <span aria-hidden="true" className="px-corner px-br" />
               <TeaserVideo
                 src={asset("/video/teaser_aws_sbg_fametro.mp4")}
                 poster={asset(site.fotos.poster)}
