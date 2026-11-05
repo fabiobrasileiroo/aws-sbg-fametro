@@ -153,5 +153,42 @@
 /* fundo 3D: nítido na abertura, desfocado no resto e ao passar o mouse no conteúdo principal */
 .scene-bg { transition: filter .5s ease, opacity .5s ease; }
 .scene-bg:not([data-current="inicio"]) { filter: blur(10px); opacity: .42; }
-.scene-bg[data-current="inicio"][data-hover] { filter: blur(8px); opacity: .55; }
+/* na abertura o fundo fica nítido; ao passar o mouse, um painel de vidro aparece atrás do conteúdo */
+.scene-bg[data-current="inicio"][data-hover] { opacity: .85; }
 @media (prefers-reduced-motion: reduce) { .scene-bg { transition: none; } }
+
+/* ---------- vidro (glassmorphism / liquid glass) no design do grupo: cantos retos, borda clara, brilho ---------- */
+.glass-panel {
+  position: absolute; inset: -1.5rem; z-index: -1; pointer-events: none;
+  opacity: 0; transform: scale(.985);
+  transition: opacity .45s ease, transform .45s ease;
+  background:
+    radial-gradient(420px circle at var(--mx, 30%) var(--my, 20%), rgba(255, 255, 255, .14), transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .02) 45%, rgba(255, 153, 0, .05)),
+    rgba(22, 29, 38, .45);
+  border: 1px solid rgba(255, 255, 255, .16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 -1px 0 rgba(255, 255, 255, .06), 0 24px 60px rgba(0, 0, 0, .45);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+[data-blur-bg]:hover > .glass-panel, [data-blur-bg]:focus-within > .glass-panel { opacity: 1; transform: none; }
+
+/* cartões: vidro translúcido sobre o fundo já desfocado (sem backdrop-filter por cartão, para não pesar) */
+main [data-slot="card"] {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .015) 50%),
+    rgba(27, 35, 46, .78);
+  border-color: rgba(255, 255, 255, .12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 12px 32px rgba(0, 0, 0, .28);
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+main [data-slot="card"]:hover {
+  border-color: rgba(255, 153, 0, .45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 16px 40px rgba(0, 0, 0, .35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-panel, main [data-slot="card"] { transition: none; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-panel { background: rgba(22, 29, 38, .9); }
+}

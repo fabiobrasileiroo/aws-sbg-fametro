@@ -185,6 +185,13 @@ export function SceneBackground() {
       const focusEls = Array.from(document.querySelectorAll<HTMLElement>("[data-blur-bg]"))
       const on = () => { host.dataset.hover = "1" }
       const off = () => { delete host.dataset.hover }
+      // brilho do vidro segue o mouse (efeito "liquid glass")
+      const sheen = (e: PointerEvent) => {
+        const el = e.currentTarget as HTMLElement, r = el.getBoundingClientRect()
+        el.style.setProperty("--mx", `${e.clientX - r.left}px`)
+        el.style.setProperty("--my", `${e.clientY - r.top}px`)
+      }
+      focusEls.forEach((el) => el.addEventListener("pointermove", sheen))
       focusEls.forEach((el) => { el.addEventListener("pointerenter", on); el.addEventListener("pointerleave", off); el.addEventListener("focusin", on); el.addEventListener("focusout", off) })
 
       let raf = 0
@@ -211,6 +218,7 @@ export function SceneBackground() {
       cleanup = () => {
         cancelAnimationFrame(raf)
         io.disconnect()
+        focusEls.forEach((el) => el.removeEventListener("pointermove", sheen))
         focusEls.forEach((el) => { el.removeEventListener("pointerenter", on); el.removeEventListener("pointerleave", off); el.removeEventListener("focusin", on); el.removeEventListener("focusout", off) })
         window.removeEventListener("resize", resize)
         window.removeEventListener("pointermove", onMove)
