@@ -10,8 +10,24 @@ import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo"
 import { asset, shortUrl, site } from "@/lib/site"
 import { cn } from "@/lib/utils"
+
+// dados estruturados para o Google (schema.org)
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: new URL("icon.png", SITE_URL).toString(),
+  image: new URL("og.jpg", SITE_URL).toString(),
+  description: SITE_DESCRIPTION,
+  areaServed: { "@type": "City", name: "Manaus" },
+  parentOrganization: { "@type": "CollegeOrUniversity", name: "Centro Universitário Fametro" },
+  founder: { "@type": "Person", name: site.lider.nome, sameAs: site.lider.links },
+  sameAs: [site.meetup],
+}
 
 const NIVEL_COR = ["bg-[#8D99A8]", "bg-aws-blue", "bg-aws-green", "bg-aws-purple"]
 
@@ -39,6 +55,7 @@ export default function Page() {
         Pular para o conteúdo
       </a>
       <SceneBackground />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ScrollEffects />
       <SiteHeader />
       <main id="conteudo" className="relative z-10">
