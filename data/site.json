@@ -1,0 +1,205 @@
+{
+  "meetup": "https://www.meetup.com/aws-sbg-at-fametro-university-center-sede-main-campus/",
+  "lider": {
+    "nome": "Fábio Henrique Mendes Brasileiro",
+    "links": [
+      "https://www.linkedin.com/in/fabiobrasileiro/",
+      "https://github.com/fabiobrasileiroo"
+    ]
+  },
+  "equipe": [
+    {
+      "nome": "Fábio Henrique Mendes Brasileiro",
+      "papel": "AWS Student Builder Group Leader",
+      "foto": "/img/pessoas/fabio-brasileiro.jpg",
+      "links": [
+        "https://www.linkedin.com/in/fabiobrasileiro/",
+        "https://github.com/fabiobrasileiroo"
+      ]
+    },
+    {
+      "nome": "Heloisa Cativo",
+      "papel": "Core Team",
+      "foto": "/img/pessoas/heloisa.jpg",
+      "links": [
+        "https://www.linkedin.com/in/helenacativo/"
+      ]
+    },
+    {
+      "nome": "Vitor Teixeira",
+      "papel": "Core Team",
+      "foto": "/img/pessoas/vitor-teixeira.jpg",
+      "links": [
+        "https://www.linkedin.com/in/vitorteixeiraa/"
+      ]
+    },
+    {
+      "nome": "Geovana",
+      "papel": "Core Team",
+      "foto": "/img/pessoas/geovana.jpg",
+      "links": [
+        "https://www.linkedin.com/in/geovana-graziela-lopes-a0077b285/"
+      ]
+    },
+    {
+      "nome": "Márcio Lopes “Spiderweb”",
+      "papel": "Core Team • SBCL (programa da AWS)",
+      "foto": "/img/pessoas/marcio-principal-quadrada.jpg",
+      "links": [
+        "https://www.linkedin.com/in/marciospider"
+      ]
+    },
+    {
+      "nome": "Eduarda Almeida",
+      "papel": "Core Team",
+      "foto": "/img/pessoas/eduarda.jpg",
+      "links": [
+        "https://www.linkedin.com/in/eduarda-almeida-3629a71ba/"
+      ]
+    }
+  ],
+  "professores": [
+    {
+      "nome": "Prof. Aguinaldo",
+      "papel": "Professor Orientador (Faculty Advisor)",
+      "foto": "/img/pessoas/aguinaldo_professor.jpg",
+      "links": [
+        "https://www.linkedin.com/in/aguinaldoneto/"
+      ]
+    },
+    {
+      "nome": "Prof. Alexsander Faria",
+      "papel": "Professor apoiador do projeto",
+      "foto": "/img/pessoas/alexsander.jpg",
+      "links": []
+    }
+  ],
+  "parceiros": [
+    {
+      "nome": "NorteJS",
+      "tipo": "Comunidade JavaScript",
+      "url": "https://nortejs.js.org/",
+      "logo": "/img/parceiros/norte_js_logo_white.jpg"
+    },
+    {
+      "nome": "PHP Manaus",
+      "tipo": "Comunidade PHP",
+      "url": "https://phpmanaus.com.br/",
+      "logo": "/img/parceiros/php-manaus-fundo-claro.jpg"
+    },
+    {
+      "nome": "Java Amazonas",
+      "tipo": "Comunidade Java",
+      "url": "https://javaamazonas.com.br/",
+      "logo": "/img/parceiros/java-amazonas.jpg"
+    },
+    {
+      "nome": "AWS User Group Manaus",
+      "tipo": "AWS User Group",
+      "url": "https://www.instagram.com/awsgroupmanaus/",
+      "logo": "/img/parceiros/aws-user-group-manaus.jpg"
+    },
+    {
+      "nome": "Orion",
+      "tipo": "Startup",
+      "url": "https://www.instagram.com/startup.orion/",
+      "logo": "/img/parceiros/orion.jpg"
+    },
+    {
+      "nome": "Rovee",
+      "tipo": "Fintech",
+      "url": "https://roveefinance.online/",
+      "logo": "/img/parceiros/rovee-icon.png"
+    }
+  ],
+  "certificacoes": [
+    {
+      "nivel": "Fundamentos",
+      "en": "Foundational",
+      "nota": "Comece aqui: sem pré-requisito",
+      "itens": [
+        {
+          "nome": "Cloud Practitioner",
+          "selo": "/img/selos/cloud-practitioner.png"
+        },
+        {
+          "nome": "AI Practitioner",
+          "selo": "/img/selos/ai-practitioner.png"
+        }
+      ]
+    },
+    {
+      "nivel": "Associado",
+      "en": "Associate",
+      "nota": "Cerca de 1 ano de prática",
+      "itens": [
+        {
+          "nome": "Solutions Architect",
+          "selo": "/img/selos/solutions-architect-associate.png"
+        },
+        {
+          "nome": "Developer",
+          "selo": "/img/selos/developer-associate.png"
+        },
+        {
+          "nome": "CloudOps Engineer",
+          "selo": "/img/selos/cloudops-engineer-associate.png"
+        },
+        {
+          "nome": "Data Engineer",
+          "selo": "/img/selos/data-engineer-associate.png"
+        },
+        {
+          "nome": "Machine Learning Engineer",
+          "selo": "/img/selos/machine-learning-engineer-associate.png"
+        }
+      ]
+    },
+    {
+      "nivel": "Profissional",
+      "en": "Professional",
+      "nota": "Cerca de 2 anos de prática",
+      "itens": [
+        {
+          "nome": "Solutions Architect",
+          "selo": "/img/selos/solutions-architect-professional.png"
+        },
+        {
+          "nome": "DevOps Engineer",
+          "selo": "/img/selos/devops-engineer-professional.png"
+        },
+        {
+          "nome": "Generative AI Developer",
+          "selo": "/img/selos/generative-ai-developer-professional.png"
+        }
+      ]
+    },
+    {
+      "nivel": "Especialidade",
+      "en": "Specialty",
+      "nota": "Aprofundamento em uma área",
+      "itens": [
+        {
+          "nome": "Security",
+          "selo": "/img/selos/security-specialty.png"
+        },
+        {
+          "nome": "Advanced Networking",
+          "selo": "/img/selos/advanced-networking-specialty.png"
+        }
+      ]
+    }
+  ],
+  "apresentacoes": [
+    {
+      "arquivo": "/slides/apresentacao_auditorio_fametro.html",
+      "titulo": "AWS Student Builder Group da Fametro - Apresentação no Auditório",
+      "descricao": "Apresentação de 20 minutos no auditório da Fametro: nuvem, IA, o programa, certificações e como participar.",
+      "slides": 24
+    }
+  ],
+  "fotos": {
+    "auditorio": "/img/fotos/auditorio-fametro-apresentacao.jpg",
+    "qrMeetup": "/img/fotos/qr-meetup-aws-sbg-fametro.png"
+  }
+}
