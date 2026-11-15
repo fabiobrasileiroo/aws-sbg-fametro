@@ -21,7 +21,7 @@ export function Links3DCloud({
     const container = containerRef.current
     if (!container) return
 
-    // Checagem de acessibilidade: redução de movimento (WCAG 2.2)
+    // Checagem de preferência de movimento reduzido (WCAG 2.2)
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
     const w = container.clientWidth || 320
@@ -29,8 +29,8 @@ export function Links3DCloud({
 
     // Cena, Câmera e Renderizador WebGL
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100)
-    camera.position.set(0, 0, variant === "hero" ? 7.6 : 8.2)
+    const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100)
+    camera.position.set(0, 0, variant === "hero" ? 7.6 : 8.0)
 
     let renderer: THREE.WebGLRenderer
     try {
@@ -40,56 +40,58 @@ export function Links3DCloud({
         powerPreference: "high-performance",
       })
     } catch {
-      // Fallback gracioso caso WebGL não esteja disponível
       return
     }
 
     renderer.setSize(w, h)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.3
+    renderer.toneMappingExposure = 1.35
     container.appendChild(renderer.domElement)
 
-    // Grupo Raiz da Nuvem
+    // Grupo Raiz da Nuvem (Mantida SEMPRE de frente para a câmera)
     const cloudRoot = new THREE.Group()
     if (variant === "flank-left") {
-      cloudRoot.rotation.y = 0.28
       cloudRoot.scale.set(0.85, 0.85, 0.85)
     } else if (variant === "flank-right") {
-      cloudRoot.rotation.y = -0.28
       cloudRoot.scale.set(0.85, 0.85, 0.85)
     }
     scene.add(cloudRoot)
 
-    // Material de Nuvem Branca Perolada / Iridescente (AWS Modern 3D Keynote Style)
-    // Reflete suavemente as luzes roxa e azul da AWS nas bordas e mantém o corpo branco luminoso
+    // Material de Nuvem Branca Sólida com acabamento Glossy / Frosted Glass (estilo 3D Keynote Apple/AWS)
+    // Sólida, aveludada e opaca, sem transparência ou efeito fumaça, com camada de verniz/clearcoat
     const cloudMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
-      emissive: 0x162032,
-      roughness: 0.18,
-      metalness: 0.04,
-      transmission: 0.42,
-      thickness: 1.8,
-      transparent: true,
-      opacity: 0.96,
-      reflectivity: 0.6,
-      clearcoat: 0.65,
+      emissive: 0x0e1726,
+      roughness: 0.28,
+      metalness: 0.02,
+      clearcoat: 0.8,
       clearcoatRoughness: 0.15,
+      reflectivity: 0.9,
     })
 
-    const puffGeom = new THREE.SphereGeometry(1, 28, 24)
+    const puffGeom = new THREE.SphereGeometry(1, 30, 26)
 
-    // Volumes esféricos que formam o contorno clássico da nuvem
+    // Geometria clássica e harmoniosa de nuvem perfeitamente simétrica e fofa vista de frente
     const puffConfigs = [
-      { pos: [0, 0, 0], scale: [1.45, 1.2, 1.15] },
-      { pos: [-1.25, -0.2, 0.15], scale: [1.1, 0.95, 0.95] },
-      { pos: [1.3, -0.15, -0.1], scale: [1.15, 1.0, 1.0] },
-      { pos: [-2.1, -0.4, 0.2], scale: [0.8, 0.7, 0.75] },
-      { pos: [2.15, -0.38, 0.15], scale: [0.85, 0.75, 0.8] },
-      { pos: [0.3, 0.8, 0.1], scale: [1.2, 1.1, 1.05] },
-      { pos: [-0.7, 0.6, -0.15], scale: [1.0, 0.95, 0.9] },
-      { pos: [0, -0.45, 0.5], scale: [1.3, 0.65, 0.8] },
-      { pos: [0.2, 0.1, -0.75], scale: [1.05, 0.9, 0.85] },
+      // Domo central superior
+      { pos: [0, 0.22, 0], scale: [1.38, 1.35, 1.05] },
+      // Pico do topo
+      { pos: [0.28, 0.8, 0.04], scale: [1.12, 1.08, 0.95] },
+      // Ombro esquerdo superior
+      { pos: [-0.68, 0.56, -0.04], scale: [1.02, 0.98, 0.92] },
+      // Flanco esquerdo médio
+      { pos: [-1.32, 0.06, 0], scale: [1.08, 1.0, 0.94] },
+      // Flanco esquerdo baixo (borda suave)
+      { pos: [-2.05, -0.25, 0.04], scale: [0.82, 0.76, 0.8] },
+      // Flanco direito médio
+      { pos: [1.32, 0.1, 0], scale: [1.14, 1.04, 0.94] },
+      // Flanco direito baixo (borda suave)
+      { pos: [2.08, -0.22, 0.04], scale: [0.84, 0.78, 0.8] },
+      // Base inferior reta e volumosa
+      { pos: [-0.72, -0.32, 0.08], scale: [1.12, 0.74, 0.9] },
+      { pos: [0.72, -0.32, 0.08], scale: [1.12, 0.74, 0.9] },
+      { pos: [0, -0.38, 0.1], scale: [1.28, 0.68, 0.92] },
     ]
 
     puffConfigs.forEach(({ pos, scale }) => {
@@ -99,58 +101,61 @@ export function Links3DCloud({
       cloudRoot.add(mesh)
     })
 
+    // Grupo independente para anéis orbitais e constelações (que giram ao redor da nuvem fixa)
+    const orbitGroup = new THREE.Group()
+    scene.add(orbitGroup)
+
     // Anel orbital 1: Roxo AWS (#AD5CFF)
     const ring1Geom = new THREE.TorusGeometry(3.15, 0.026, 16, 80)
     const ring1Mat = new THREE.MeshBasicMaterial({
       color: 0xad5cff,
       transparent: true,
-      opacity: variant === "flank-right" ? 0.25 : 0.6,
+      opacity: variant === "flank-right" ? 0.35 : 0.65,
     })
     const ring1 = new THREE.Mesh(ring1Geom, ring1Mat)
     ring1.rotation.x = Math.PI / 2.3
     ring1.rotation.y = Math.PI / 8
-    cloudRoot.add(ring1)
+    orbitGroup.add(ring1)
 
     // Anel orbital 2: Azul Elétrico AWS (#42B4FF)
     const ring2Geom = new THREE.TorusGeometry(3.4, 0.02, 16, 80)
     const ring2Mat = new THREE.MeshBasicMaterial({
       color: 0x42b4ff,
       transparent: true,
-      opacity: variant === "flank-left" ? 0.25 : 0.55,
+      opacity: variant === "flank-left" ? 0.35 : 0.6,
     })
     const ring2 = new THREE.Mesh(ring2Geom, ring2Mat)
     ring2.rotation.x = Math.PI / 1.75
     ring2.rotation.z = Math.PI / 5
-    cloudRoot.add(ring2)
+    orbitGroup.add(ring2)
 
-    // Nuvenzinhas satélites orbitando em branco perolado
-    const satelliteGroup = new THREE.Group()
-    scene.add(satelliteGroup)
+    // Nuvenzinhas satélites sólidas orbitando ao redor
+    const satGroup = new THREE.Group()
+    scene.add(satGroup)
 
     const satMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
-      roughness: 0.25,
-      metalness: 0.05,
-      transmission: 0.35,
-      thickness: 1.2,
-      transparent: true,
-      opacity: 0.9,
+      emissive: 0x0e1726,
+      roughness: 0.3,
+      metalness: 0.02,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.2,
     })
 
     const sat1 = new THREE.Mesh(puffGeom, satMat)
     sat1.scale.set(0.35, 0.28, 0.28)
     sat1.position.set(-3.2, 1.2, 0.8)
-    satelliteGroup.add(sat1)
+    satGroup.add(sat1)
 
     const sat2 = new THREE.Mesh(puffGeom, satMat)
     sat2.scale.set(0.42, 0.32, 0.32)
     sat2.position.set(3.4, -0.9, -0.5)
-    satelliteGroup.add(sat2)
+    satGroup.add(sat2)
 
     // =========================================================================
-    // UNIVERSO DE PONTINHOS CÓSMICOS & CONSTELAÇÕES ("efeitos vários muito top")
+    // UNIVERSO DE PONTINHOS CÓSMICOS & CONSTELAÇÕES AWS
     // =========================================================================
-    const totalStars = variant === "hero" ? 280 : 160
+    const totalStars = variant === "hero" ? 280 : 150
     const starGeom = new THREE.BufferGeometry()
     const starPositions = new Float32Array(totalStars * 3)
     const starColors = new Float32Array(totalStars * 3)
@@ -167,14 +172,13 @@ export function Links3DCloud({
     ]
 
     for (let i = 0; i < totalStars; i++) {
-      // Distribuição em duas camadas: estrelas orbitando a nuvem e estrelas profundas do cosmos
       const isDistant = i % 3 === 0
-      const r = isDistant ? 4.5 + Math.random() * 5.5 : 2.2 + Math.random() * 2.8
+      const r = isDistant ? 4.5 + Math.random() * 5.0 : 2.2 + Math.random() * 2.6
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(Math.random() * 2 - 1)
 
       starPositions[i * 3] = r * Math.sin(phi) * Math.cos(theta)
-      starPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.8
+      starPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.85
       starPositions[i * 3 + 2] = r * Math.cos(phi)
 
       const col = awsUniversePalette[i % awsUniversePalette.length]
@@ -197,7 +201,7 @@ export function Links3DCloud({
     scene.add(starField)
 
     // Linhas de Constelação Geométrica entre estrelas próximas
-    const constellationLinesCount = variant === "hero" ? 50 : 25
+    const constellationLinesCount = variant === "hero" ? 48 : 22
     const linePositions = new Float32Array(constellationLinesCount * 2 * 3)
     let lineIdx = 0
 
@@ -222,82 +226,87 @@ export function Links3DCloud({
     const lineMat = new THREE.LineBasicMaterial({
       color: 0xad5cff,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.24,
       blending: THREE.AdditiveBlending,
     })
     const constellationLines = new THREE.LineSegments(lineGeom, lineMat)
     scene.add(constellationLines)
 
-    // Iluminação Dual AWS (Roxo & Azul elétrico sobre o corpo branco da nuvem)
-    const purpleLight = new THREE.PointLight(0xad5cff, 15, 30)
-    purpleLight.position.set(-5, 4, 4.5)
+    // =========================================================================
+    // ILUMINAÇÃO DE DESTAQUE DUAL AWS (Sem sombras turvas)
+    // =========================================================================
+    // Luz frontal suave para realçar o branco porcelana e a fofura da nuvem
+    const frontLight = new THREE.DirectionalLight(0xffffff, 1.6)
+    frontLight.position.set(0, 1.5, 7)
+    scene.add(frontLight)
+
+    // Roxo vibrante no canto superior esquerdo
+    const purpleLight = new THREE.PointLight(0xad5cff, 18, 30)
+    purpleLight.position.set(-5, 4.5, 4.5)
     scene.add(purpleLight)
 
-    const blueLight = new THREE.PointLight(0x42b4ff, 13, 30)
-    blueLight.position.set(5.5, -2, 3.5)
+    // Azul Ciano elétrico no canto superior direito
+    const blueLight = new THREE.PointLight(0x42b4ff, 15, 30)
+    blueLight.position.set(5.5, -1.8, 3.5)
     scene.add(blueLight)
 
-    const orangeAccent = new THREE.PointLight(0xff9900, 5, 20)
-    orangeAccent.position.set(0, -4.5, -2)
+    // Toque quente suave na base
+    const orangeAccent = new THREE.PointLight(0xff9900, 6, 20)
+    orangeAccent.position.set(0, -4.5, 1)
     scene.add(orangeAccent)
 
-    const ambientLight = new THREE.AmbientLight(0xf4f7fd, 2.2)
+    const ambientLight = new THREE.AmbientLight(0xf0f4fd, 1.8)
     scene.add(ambientLight)
 
     const initRaf = requestAnimationFrame(() => {
       setIsLoaded(true)
     })
 
-    // Interatividade com Mouse / Toque / Giro Cósmico
-    let targetRotY = 0
-    let targetRotX = 0
-    let curRotY = 0
-    let curRotX = 0
-    let isDragging = false
-    let lastX = 0
-    let lastY = 0
-    let dragVelocityX = 0
-    let dragVelocityY = 0
+    // =========================================================================
+    // INTERATIVIDADE LIMITADA: PARALAXE 3D SUAVE (NUNCA GIRA DE LADO)
+    // =========================================================================
+    let targetTiltY = 0
+    let targetTiltX = 0
+    let curTiltY = 0
+    let curTiltX = 0
+    let isInteracting = false
 
-    const onPointerDown = (e: PointerEvent) => {
-      isDragging = true
-      lastX = e.clientX
-      lastY = e.clientY
-      container.setPointerCapture?.(e.pointerId)
-    }
+    const baseAngleY = variant === "flank-left" ? 0.22 : variant === "flank-right" ? -0.22 : 0
 
     const onPointerMove = (e: PointerEvent) => {
-      if (isDragging) {
-        const dx = e.clientX - lastX
-        const dy = e.clientY - lastY
-        dragVelocityX = dx * 0.007
-        dragVelocityY = dy * 0.007
-        targetRotY += dragVelocityX
-        targetRotX += dragVelocityY
-        lastX = e.clientX
-        lastY = e.clientY
-      } else {
-        const rect = container.getBoundingClientRect()
-        const nx = (e.clientX - rect.left) / rect.width - 0.5
-        const ny = (e.clientY - rect.top) / rect.height - 0.5
-        targetRotY = nx * 0.95
-        targetRotX = ny * 0.65
-      }
+      const rect = container.getBoundingClientRect()
+      const nx = (e.clientX - rect.left) / rect.width - 0.5
+      const ny = (e.clientY - rect.top) / rect.height - 0.5
+      // Ângulo máximo limitado a ±12 graus (0.21 radianos) para a nuvem NUNCA ficar de lado
+      targetTiltY = Math.max(-0.22, Math.min(0.22, nx * 0.45))
+      targetTiltX = Math.max(-0.16, Math.min(0.16, ny * 0.35))
     }
 
-    const onPointerUp = (e: PointerEvent) => {
-      isDragging = false
-      container.releasePointerCapture?.(e.pointerId)
+    const onPointerDown = () => {
+      isInteracting = true
+    }
+
+    const onPointerUp = () => {
+      isInteracting = false
+      targetTiltY = 0
+      targetTiltX = 0
+    }
+
+    const onPointerLeave = () => {
+      if (!isInteracting) {
+        targetTiltY = 0
+        targetTiltX = 0
+      }
     }
 
     if (interactive) {
       container.addEventListener("pointerdown", onPointerDown)
-      window.addEventListener("pointermove", onPointerMove, { passive: true })
+      container.addEventListener("pointermove", onPointerMove, { passive: true })
       window.addEventListener("pointerup", onPointerUp)
-      window.addEventListener("pointercancel", onPointerUp)
+      container.addEventListener("pointerleave", onPointerLeave)
     }
 
-    // Responsividade ao redimensionar
+    // Responsividade
     const onResize = () => {
       if (!container) return
       const nw = container.clientWidth
@@ -317,44 +326,37 @@ export function Links3DCloud({
       const elapsed = clock.getElapsedTime()
 
       if (!prefersReducedMotion) {
-        // Amortecimento suave e inércia de rotação
-        curRotY += (targetRotY - curRotY) * 0.06
-        curRotX += (targetRotX - curRotX) * 0.06
+        // Amortecimento suave com mola de retorno para a posição frontal
+        curTiltY += (targetTiltY - curTiltY) * 0.08
+        curTiltX += (targetTiltX - curTiltX) * 0.08
 
-        if (!isDragging) {
-          dragVelocityX *= 0.95
-          dragVelocityY *= 0.95
-          targetRotY += dragVelocityX
-          targetRotX += dragVelocityY
-        }
+        // A nuvem fica SEMPRE de frente: flutua verticalmente com leve respiração 3D
+        cloudRoot.position.y = Math.sin(elapsed * 1.5) * 0.12
+        cloudRoot.position.x = Math.cos(elapsed * 0.8) * 0.06
+        cloudRoot.rotation.y = baseAngleY + curTiltY
+        cloudRoot.rotation.x = curTiltX + Math.sin(elapsed * 0.8) * 0.03
 
-        // Flutuação natural da nuvem branca
-        cloudRoot.position.y = Math.sin(elapsed * 1.5) * 0.14
-        cloudRoot.position.x = Math.cos(elapsed * 0.9) * 0.08
-        cloudRoot.rotation.y = elapsed * 0.22 + curRotY * 1.8
-        cloudRoot.rotation.x = curRotX * 1.2 + Math.sin(elapsed * 0.8) * 0.06
-
-        // Rotação dos anéis orbitais
+        // Anéis orbitais giram continuamente em 3D ao redor da nuvem frontal
         ring1.rotation.z = elapsed * 0.45
         ring2.rotation.y = elapsed * -0.32
 
-        // Órbita dos satélites brancos
+        // Órbita dos satélites
         sat1.position.x = Math.cos(elapsed * 0.7) * 3.4
         sat1.position.z = Math.sin(elapsed * 0.7) * 2.2
-        sat1.position.y = Math.sin(elapsed * 1.2) * 0.6 + 0.8
+        sat1.position.y = Math.sin(elapsed * 1.2) * 0.5 + 0.7
 
         sat2.position.x = Math.cos(elapsed * 0.6 + Math.PI) * 3.6
         sat2.position.z = Math.sin(elapsed * 0.6 + Math.PI) * 2.5
-        sat2.position.y = Math.cos(elapsed * 1.1) * 0.5 - 0.7
+        sat2.position.y = Math.cos(elapsed * 1.1) * 0.4 - 0.6
 
-        // Rotação dinâmica do campo estelar / universo cósmico
-        starField.rotation.y = elapsed * 0.08 + curRotY * 0.5
-        starField.rotation.x = Math.sin(elapsed * 0.05) * 0.08 + curRotX * 0.3
+        // Rotação dinâmica do campo estelar cósmico
+        starField.rotation.y = elapsed * 0.07 + curTiltY * 0.5
+        starField.rotation.x = Math.sin(elapsed * 0.05) * 0.06 + curTiltX * 0.3
 
-        // Pulsação suave das linhas de constelação
+        // Linhas de constelação
         constellationLines.rotation.y = starField.rotation.y
         constellationLines.rotation.x = starField.rotation.x
-        lineMat.opacity = 0.18 + Math.sin(elapsed * 2.5) * 0.08
+        lineMat.opacity = 0.2 + Math.sin(elapsed * 2.5) * 0.08
       }
 
       renderer.render(scene, camera)
@@ -368,9 +370,9 @@ export function Links3DCloud({
       window.removeEventListener("resize", onResize)
       if (interactive) {
         container.removeEventListener("pointerdown", onPointerDown)
-        window.removeEventListener("pointermove", onPointerMove)
+        container.removeEventListener("pointermove", onPointerMove)
         window.removeEventListener("pointerup", onPointerUp)
-        window.removeEventListener("pointercancel", onPointerUp)
+        container.removeEventListener("pointerleave", onPointerLeave)
       }
 
       puffGeom.dispose()
