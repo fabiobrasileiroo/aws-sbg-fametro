@@ -28,7 +28,7 @@ export function LinksView({ locale }: LinksViewProps) {
       subtitle: isEn
         ? "Dec 12 (Afternoon) • Featuring Guga na Nuvem & Josilene Silva"
         : "12 de Dezembro (Tarde) • Com Guga na Nuvem & Josilene Silva",
-      url: site.meetup,
+      url: ("encontroOnline" in site && site.encontroOnline?.meetup_url) ? site.encontroOnline.meetup_url : site.meetup,
       badge: isEn ? "Next Event • Dec 12" : "Próximo Evento • 12/Dez",
       icon: CalendarDotsIcon,
       highlight: true,
@@ -211,6 +211,11 @@ export function LinksView({ locale }: LinksViewProps) {
                     className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground"
                     weight="bold"
                   />
+                  {item.external && (
+                    <span className="sr-only">
+                      {isEn ? " (opens in a new tab)" : " (abre em nova aba)"}
+                    </span>
+                  )}
                 </div>
               </a>
             )
