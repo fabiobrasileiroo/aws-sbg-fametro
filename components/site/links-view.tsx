@@ -182,9 +182,9 @@ export function LinksView({ locale }: LinksViewProps) {
         className="hidden xl:flex fixed left-4 2xl:left-14 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3 w-56 select-none pointer-events-auto sbg-rise"
         style={{ animationDelay: "300ms" }}
       >
-        <div className="relative w-full overflow-hidden rounded-2xl border border-aws-purple/35 bg-card/75 p-3.5 shadow-xl shadow-aws-purple/10 backdrop-blur-md transition-all duration-300 hover:border-aws-purple hover:shadow-aws-purple/30 hover:-translate-y-1">
-          <div className="relative h-36 w-full overflow-hidden rounded-xl">
-            <Links3DCloud variant="flank-left" className="size-full cursor-grab active:cursor-grabbing" />
+        <div className="relative w-full overflow-visible rounded-2xl border border-aws-purple/35 bg-card/75 p-3.5 shadow-xl shadow-aws-purple/10 backdrop-blur-md transition-all duration-300 hover:border-aws-purple hover:shadow-aws-purple/30 hover:-translate-y-1">
+          <div className="relative h-44 w-full overflow-visible">
+            <Links3DCloud variant="flank-left" className="size-full cursor-grab active:cursor-grabbing overflow-visible" />
           </div>
           <div className="mt-2.5 text-center">
             <span className="inline-block font-mono text-[10px] font-semibold uppercase tracking-wider text-aws-purple">
@@ -209,9 +209,9 @@ export function LinksView({ locale }: LinksViewProps) {
         className="hidden xl:flex fixed right-4 2xl:right-14 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3 w-56 select-none pointer-events-auto sbg-rise"
         style={{ animationDelay: "450ms" }}
       >
-        <div className="relative w-full overflow-hidden rounded-2xl border border-aws-blue/35 bg-card/75 p-3.5 shadow-xl shadow-aws-blue/10 backdrop-blur-md transition-all duration-300 hover:border-aws-blue hover:shadow-aws-blue/30 hover:-translate-y-1">
-          <div className="relative h-36 w-full overflow-hidden rounded-xl">
-            <Links3DCloud variant="flank-right" className="size-full cursor-grab active:cursor-grabbing" />
+        <div className="relative w-full overflow-visible rounded-2xl border border-aws-blue/35 bg-card/75 p-3.5 shadow-xl shadow-aws-blue/10 backdrop-blur-md transition-all duration-300 hover:border-aws-blue hover:shadow-aws-blue/30 hover:-translate-y-1">
+          <div className="relative h-44 w-full overflow-visible">
+            <Links3DCloud variant="flank-right" className="size-full cursor-grab active:cursor-grabbing overflow-visible" />
           </div>
           <div className="mt-2.5 text-center">
             <span className="inline-block font-mono text-[10px] font-semibold uppercase tracking-wider text-aws-blue">
@@ -234,8 +234,8 @@ export function LinksView({ locale }: LinksViewProps) {
         {/* Header do perfil */}
         <header className="mb-6 flex w-full flex-col items-center text-center sbg-rise">
           {/* Nuvem 3D Interativa com Constelação de Partículas AWS */}
-          <div className="relative w-full overflow-hidden">
-            <Links3DCloud variant="hero" className="mx-auto h-44 w-full sm:h-52 cursor-grab active:cursor-grabbing" />
+          <div className="relative w-full overflow-visible">
+            <Links3DCloud variant="hero" className="mx-auto h-52 w-full sm:h-64 cursor-grab active:cursor-grabbing overflow-visible" />
           </div>
 
           {/* Avatar com moldura de vidro e cantos pixel no tom roxo AWS */}

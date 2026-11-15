@@ -29,8 +29,9 @@ export function Links3DCloud({
 
     // Cena, Câmera e Renderizador WebGL
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100)
-    camera.position.set(0, 0, variant === "hero" ? 7.6 : 8.0)
+    // Câmera posicionada com folga generosa para os anéis e estrelas nunca serem cortados
+    const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100)
+    camera.position.set(0, 0, variant === "hero" ? 9.2 : 9.8)
 
     let renderer: THREE.WebGLRenderer
     try {
@@ -47,6 +48,7 @@ export function Links3DCloud({
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
     renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.toneMappingExposure = 1.35
+    renderer.domElement.style.overflow = "visible"
     container.appendChild(renderer.domElement)
 
     // Grupo Raiz da Nuvem (Mantida SEMPRE de frente para a câmera)
@@ -106,7 +108,7 @@ export function Links3DCloud({
     scene.add(orbitGroup)
 
     // Anel orbital 1: Roxo AWS (#AD5CFF)
-    const ring1Geom = new THREE.TorusGeometry(3.15, 0.026, 16, 80)
+    const ring1Geom = new THREE.TorusGeometry(2.7, 0.024, 16, 80)
     const ring1Mat = new THREE.MeshBasicMaterial({
       color: 0xad5cff,
       transparent: true,
@@ -118,7 +120,7 @@ export function Links3DCloud({
     orbitGroup.add(ring1)
 
     // Anel orbital 2: Azul Elétrico AWS (#42B4FF)
-    const ring2Geom = new THREE.TorusGeometry(3.4, 0.02, 16, 80)
+    const ring2Geom = new THREE.TorusGeometry(2.95, 0.02, 16, 80)
     const ring2Mat = new THREE.MeshBasicMaterial({
       color: 0x42b4ff,
       transparent: true,
@@ -143,13 +145,13 @@ export function Links3DCloud({
     })
 
     const sat1 = new THREE.Mesh(puffGeom, satMat)
-    sat1.scale.set(0.35, 0.28, 0.28)
-    sat1.position.set(-3.2, 1.2, 0.8)
+    sat1.scale.set(0.32, 0.25, 0.25)
+    sat1.position.set(-2.6, 0.9, 0.7)
     satGroup.add(sat1)
 
     const sat2 = new THREE.Mesh(puffGeom, satMat)
-    sat2.scale.set(0.42, 0.32, 0.32)
-    sat2.position.set(3.4, -0.9, -0.5)
+    sat2.scale.set(0.36, 0.28, 0.28)
+    sat2.position.set(2.7, -0.7, -0.4)
     satGroup.add(sat2)
 
     // =========================================================================
@@ -173,7 +175,7 @@ export function Links3DCloud({
 
     for (let i = 0; i < totalStars; i++) {
       const isDistant = i % 3 === 0
-      const r = isDistant ? 4.5 + Math.random() * 5.0 : 2.2 + Math.random() * 2.6
+      const r = isDistant ? 3.6 + Math.random() * 3.4 : 1.9 + Math.random() * 1.9
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(Math.random() * 2 - 1)
 
@@ -327,13 +329,13 @@ export function Links3DCloud({
         ring2.rotation.y = elapsed * -0.32
 
         // Órbita dos satélites
-        sat1.position.x = Math.cos(elapsed * 0.7) * 3.4
-        sat1.position.z = Math.sin(elapsed * 0.7) * 2.2
-        sat1.position.y = Math.sin(elapsed * 1.2) * 0.5 + 0.7
+        sat1.position.x = Math.cos(elapsed * 0.7) * 2.8
+        sat1.position.z = Math.sin(elapsed * 0.7) * 1.8
+        sat1.position.y = Math.sin(elapsed * 1.2) * 0.4 + 0.6
 
-        sat2.position.x = Math.cos(elapsed * 0.6 + Math.PI) * 3.6
-        sat2.position.z = Math.sin(elapsed * 0.6 + Math.PI) * 2.5
-        sat2.position.y = Math.cos(elapsed * 1.1) * 0.4 - 0.6
+        sat2.position.x = Math.cos(elapsed * 0.6 + Math.PI) * 2.9
+        sat2.position.z = Math.sin(elapsed * 0.6 + Math.PI) * 2.0
+        sat2.position.y = Math.cos(elapsed * 1.1) * 0.35 - 0.5
 
         // Rotação dinâmica do campo estelar cósmico acompanhando o mouse global
         starField.rotation.y = elapsed * 0.07 + curTiltY * 0.85
