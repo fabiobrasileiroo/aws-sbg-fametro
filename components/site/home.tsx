@@ -75,7 +75,16 @@ export function HomePage({ locale }: { locale: Locale }) {
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/20" />
           <div data-blur-bg className="relative isolate mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_1fr] md:py-28">
             <div className="relative isolate flex flex-col gap-6">
-              <Badge variant="outline" className="w-fit">{t.hero.badge}</Badge>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="outline" className="w-fit">{t.hero.badge}</Badge>
+                {"encontroOnline" in site && site.encontroOnline && (
+                  <a href="#evento" className="inline-flex">
+                    <Badge variant="secondary" className="border-aws-orange/40 text-aws-orange transition hover:border-aws-orange">
+                      {pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)} • {pick(locale, site.encontroOnline.data, site.encontroOnline.data_en)}
+                    </Badge>
+                  </a>
+                )}
+              </div>
               <h1 id="inicio-titulo" className="text-4xl leading-tight font-semibold md:text-6xl">
                 AWS Student Builder Group <span className="text-aws-orange">{t.hero.titleSuffix}</span>
               </h1>
@@ -160,9 +169,15 @@ export function HomePage({ locale }: { locale: Locale }) {
                   <a href={asset(deck.arquivo)} className={buttonVariants({ size: "lg" })}>
                     <ArrowSquareOutIcon data-icon="inline-start" /> {t.talks.open}
                   </a>
-                  <a href={asset("/teaser/")} className={buttonVariants({ size: "lg", variant: "outline" })}>
-                    <PlayIcon data-icon="inline-start" /> {t.talks.teaser}
-                  </a>
+                  {deck.arquivo.includes("auditorio") ? (
+                    <a href={asset("/teaser/")} className={buttonVariants({ size: "lg", variant: "outline" })}>
+                      <PlayIcon data-icon="inline-start" /> {t.talks.teaser}
+                    </a>
+                  ) : (
+                    <a href={site.meetup} target="_blank" rel="noopener noreferrer" className={buttonVariants({ size: "lg", variant: "outline" })}>
+                      <UsersThreeIcon data-icon="inline-start" /> {t.hero.joinMeetup}<span className="sr-only">{t.newTab}</span>
+                    </a>
+                  )}
                 </CardFooter>
               </Card>
             ))}
@@ -193,17 +208,91 @@ export function HomePage({ locale }: { locale: Locale }) {
               </li>
             ))}
           </ul>
-          {site.proximoEvento && (
-            <div id="evento" data-reveal className="scroll-mt-24">
-              <WhoIsIt
-                locale={locale}
-                logo={asset(site.proximoEvento.logo)}
-                local={site.proximoEvento.local}
-                descricao={pick(locale, site.proximoEvento.descricao, site.proximoEvento.descricaoEn)}
-                data={pick(locale, site.proximoEvento.data, site.proximoEvento.dataEn)}
-              />
-            </div>
-          )}
+          <div id="evento" data-reveal className="scroll-mt-24 flex flex-col gap-8">
+            {"encontroOnline" in site && site.encontroOnline && (
+              <Card className="overflow-hidden border-aws-orange/40 bg-card/80 backdrop-blur-xs">
+                <div className="h-2 w-full bg-aws-orange" aria-hidden="true" />
+                <CardHeader className="flex flex-col gap-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant="secondary" className="border-aws-orange/50 text-aws-orange font-semibold">
+                      {pick(locale, site.encontroOnline.data, site.encontroOnline.data_en)}
+                    </Badge>
+                    <Badge variant="outline">
+                      {locale === "en" ? "100% Online • Free & Open" : "100% Online • Aberto e Gratuito"}
+                    </Badge>
+                  </div>
+                  <CardTitle className="font-heading text-2xl md:text-3xl">
+                    {pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)}
+                  </CardTitle>
+                  <CardDescription className="text-base leading-relaxed text-muted-foreground">
+                    {pick(locale, site.encontroOnline.descricao, site.encontroOnline.descricao_en)}
+                  </CardDescription>
+                </CardHeader>
+                {site.encontroOnline.convidados && site.encontroOnline.convidados.length > 0 && (
+                  <CardContent className="flex flex-col gap-4">
+                    <p className="font-heading text-xs font-semibold uppercase tracking-widest text-aws-orange">
+                      {locale === "en" ? "Special Guests" : "Convidados Especiais"}
+                    </p>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {site.encontroOnline.convidados.map((c) => (
+                        <div key={c.nome} className="flex items-center gap-4 rounded-lg border border-border/60 bg-muted/30 p-3">
+                          {c.foto ? (
+                            <img loading="lazy" decoding="async" src={asset(c.foto)} alt="" className="size-14 rounded-full object-cover shrink-0 border border-border" />
+                          ) : (
+                            <div className="flex size-14 items-center justify-center rounded-full bg-aws-orange/20 text-aws-orange font-bold text-lg shrink-0">
+                              {c.nome.charAt(0)}
+                            </div>
+                          )}
+                          <div className="flex min-w-0 flex-col gap-0.5">
+                            <div className="flex items-center gap-2">
+                              <strong className="text-base text-foreground truncate">{c.nome}</strong>
+                              <span className="text-xs text-muted-foreground font-mono">({pick(locale, c.origem, c.origemEn)})</span>
+                            </div>
+                            <span className="text-xs text-muted-foreground line-clamp-2">
+                              {pick(locale, c.papel, c.papelEn)}
+                            </span>
+                            {c.link && (
+                              <ExternalLink newTab={t.newTab} href={c.link} className="text-xs font-mono text-aws-orange mt-0.5">
+                                {shortUrl(c.link)}
+                              </ExternalLink>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                )}
+                <CardFooter className="flex flex-wrap gap-3 border-t border-border/60 bg-muted/20 pt-4">
+                  <a
+                    href={site.encontroOnline.meetup_url ?? site.meetup}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={buttonVariants({ size: "lg" })}
+                  >
+                    <UsersThreeIcon data-icon="inline-start" /> {locale === "en" ? "RSVP on Meetup" : "Inscrever-se no Meetup"}
+                    <span className="sr-only">{t.newTab}</span>
+                  </a>
+                  <a href="#apresentacoes" className={buttonVariants({ size: "lg", variant: "outline" })}>
+                    <PlayIcon data-icon="inline-start" /> {locale === "en" ? "View Interactive Slides" : "Ver slides interativos"}
+                  </a>
+                </CardFooter>
+              </Card>
+            )}
+            {site.proximoEvento && (
+              <div>
+                <p className="mb-3 font-heading text-xs font-semibold uppercase tracking-widest text-muted-foreground text-center">
+                  {locale === "en" ? "Next In-Person Meetup (Teaser)" : "Próximo Encontro Presencial (Teaser)"}
+                </p>
+                <WhoIsIt
+                  locale={locale}
+                  logo={asset(site.proximoEvento.logo)}
+                  local={site.proximoEvento.local}
+                  descricao={pick(locale, site.proximoEvento.descricao, site.proximoEvento.descricaoEn)}
+                  data={pick(locale, site.proximoEvento.data, site.proximoEvento.dataEn)}
+                />
+              </div>
+            )}
+          </div>
         </Secao>
 
         {/* certificações */}
