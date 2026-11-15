@@ -263,47 +263,33 @@ export function Links3DCloud({
     })
 
     // =========================================================================
-    // INTERATIVIDADE LIMITADA: PARALAXE 3D SUAVE (NUNCA GIRA DE LADO)
+    // INTERATIVIDADE GLOBAL: O MOUSE EM QUALQUER LUGAR DA TELA MOVE A NUVEM
     // =========================================================================
     let targetTiltY = 0
     let targetTiltX = 0
     let curTiltY = 0
     let curTiltX = 0
-    let isInteracting = false
 
     const baseAngleY = variant === "flank-left" ? 0.22 : variant === "flank-right" ? -0.22 : 0
 
-    const onPointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect()
-      const nx = (e.clientX - rect.left) / rect.width - 0.5
-      const ny = (e.clientY - rect.top) / rect.height - 0.5
-      // Ângulo máximo limitado a ±12 graus (0.21 radianos) para a nuvem NUNCA ficar de lado
+    const onGlobalPointerMove = (e: PointerEvent) => {
+      // Coordenadas normalizadas em relação à tela inteira [-0.5, 0.5]
+      const nx = e.clientX / window.innerWidth - 0.5
+      const ny = e.clientY / window.innerHeight - 0.5
+
+      // Leve inclinação 3D elegante (máximo ±12° em Y e ±9° em X) - Nuvem sempre de frente
       targetTiltY = Math.max(-0.22, Math.min(0.22, nx * 0.45))
       targetTiltX = Math.max(-0.16, Math.min(0.16, ny * 0.35))
     }
 
-    const onPointerDown = () => {
-      isInteracting = true
-    }
-
-    const onPointerUp = () => {
-      isInteracting = false
+    const onGlobalPointerLeave = () => {
       targetTiltY = 0
       targetTiltX = 0
     }
 
-    const onPointerLeave = () => {
-      if (!isInteracting) {
-        targetTiltY = 0
-        targetTiltX = 0
-      }
-    }
-
     if (interactive) {
-      container.addEventListener("pointerdown", onPointerDown)
-      container.addEventListener("pointermove", onPointerMove, { passive: true })
-      window.addEventListener("pointerup", onPointerUp)
-      container.addEventListener("pointerleave", onPointerLeave)
+      window.addEventListener("pointermove", onGlobalPointerMove, { passive: true })
+      window.addEventListener("pointerleave", onGlobalPointerLeave)
     }
 
     // Responsividade
@@ -326,13 +312,13 @@ export function Links3DCloud({
       const elapsed = clock.getElapsedTime()
 
       if (!prefersReducedMotion) {
-        // Amortecimento suave com mola de retorno para a posição frontal
-        curTiltY += (targetTiltY - curTiltY) * 0.08
-        curTiltX += (targetTiltX - curTiltX) * 0.08
+        // Amortecimento suave e fluído
+        curTiltY += (targetTiltY - curTiltY) * 0.06
+        curTiltX += (targetTiltX - curTiltX) * 0.06
 
-        // A nuvem fica SEMPRE de frente: flutua verticalmente com leve respiração 3D
-        cloudRoot.position.y = Math.sin(elapsed * 1.5) * 0.12
-        cloudRoot.position.x = Math.cos(elapsed * 0.8) * 0.06
+        // A nuvem fica SEMPRE de frente: flutua e desliza suavemente em direção ao mouse em qualquer lugar da tela
+        cloudRoot.position.y = Math.sin(elapsed * 1.5) * 0.12 - curTiltX * 0.35
+        cloudRoot.position.x = Math.cos(elapsed * 0.8) * 0.06 + curTiltY * 0.45
         cloudRoot.rotation.y = baseAngleY + curTiltY
         cloudRoot.rotation.x = curTiltX + Math.sin(elapsed * 0.8) * 0.03
 
@@ -349,9 +335,9 @@ export function Links3DCloud({
         sat2.position.z = Math.sin(elapsed * 0.6 + Math.PI) * 2.5
         sat2.position.y = Math.cos(elapsed * 1.1) * 0.4 - 0.6
 
-        // Rotação dinâmica do campo estelar cósmico
-        starField.rotation.y = elapsed * 0.07 + curTiltY * 0.5
-        starField.rotation.x = Math.sin(elapsed * 0.05) * 0.06 + curTiltX * 0.3
+        // Rotação dinâmica do campo estelar cósmico acompanhando o mouse global
+        starField.rotation.y = elapsed * 0.07 + curTiltY * 0.85
+        starField.rotation.x = Math.sin(elapsed * 0.05) * 0.06 + curTiltX * 0.55
 
         // Linhas de constelação
         constellationLines.rotation.y = starField.rotation.y
@@ -369,10 +355,8 @@ export function Links3DCloud({
       cancelAnimationFrame(reqId)
       window.removeEventListener("resize", onResize)
       if (interactive) {
-        container.removeEventListener("pointerdown", onPointerDown)
-        container.removeEventListener("pointermove", onPointerMove)
-        window.removeEventListener("pointerup", onPointerUp)
-        container.removeEventListener("pointerleave", onPointerLeave)
+        window.removeEventListener("pointermove", onGlobalPointerMove)
+        window.removeEventListener("pointerleave", onGlobalPointerLeave)
       }
 
       puffGeom.dispose()
