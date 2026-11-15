@@ -12,6 +12,7 @@ import {
 import { site, asset } from "@/lib/site"
 import { type Locale } from "@/lib/i18n"
 import { Badge } from "@/components/ui/badge"
+import { Links3DCloud } from "@/components/site/links-3d-cloud"
 
 interface LinksViewProps {
   locale: Locale
@@ -90,7 +91,7 @@ export function LinksView({ locale }: LinksViewProps) {
       badge: isEn ? "Next Event • Dec 12" : "Próximo Evento • 12/Dez",
       icon: CalendarDotsIcon,
       highlight: true,
-      color: "orange",
+      color: "purple",
       external: true,
     },
     {
@@ -168,47 +169,77 @@ export function LinksView({ locale }: LinksViewProps) {
   ]
 
   return (
-    <div className="relative min-h-screen w-full bg-pixel-grid bg-background px-4 py-12 text-foreground sm:py-16 overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-pixel-grid bg-background px-4 py-8 text-foreground sm:py-14 overflow-x-hidden">
       {/* Aurora animada com a paleta oficial da AWS */}
       <div aria-hidden="true" className="aws-aurora-glow" />
 
-      {/* Pixels 8-bit decorativos flutuantes (Assinatura visual do SBG Kit) */}
-      <div
-        aria-hidden="true"
-        className="pixel-chip left-8 top-28 text-aws-orange hidden sm:block"
-        style={{ animationDelay: "0.2s" }}
-      />
-      <div
-        aria-hidden="true"
-        className="pixel-chip right-10 top-36 text-aws-blue hidden sm:block"
-        style={{ animationDelay: "0.7s" }}
-      />
-      <div
-        aria-hidden="true"
-        className="pixel-chip left-12 top-2/3 text-aws-pink hidden sm:block"
-        style={{ animationDelay: "1.2s" }}
-      />
-      <div
-        aria-hidden="true"
-        className="pixel-chip right-14 top-1/2 text-aws-purple hidden sm:block"
-        style={{ animationDelay: "0.9s" }}
-      />
-      <div
-        aria-hidden="true"
-        className="pixel-chip right-8 bottom-36 text-aws-green hidden sm:block"
-        style={{ animationDelay: "1.5s" }}
-      />
-      <div
-        aria-hidden="true"
-        className="pixel-chip left-10 bottom-24 text-aws-orange hidden sm:block"
-        style={{ animationDelay: "0.4s" }}
-      />
+      {/* Universo de estrelas e poeira cósmica AWS */}
+      <div aria-hidden="true" className="cosmic-universe-stars" />
+
+      {/* Ilha Cósmica Lateral Esquerda (Desktop) */}
+      <aside
+        aria-label={isEn ? "Cloud Architecture Overview" : "Visão de Arquitetura Cloud"}
+        className="hidden xl:flex fixed left-4 2xl:left-14 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3 w-56 select-none pointer-events-auto sbg-rise"
+        style={{ animationDelay: "300ms" }}
+      >
+        <div className="relative w-full overflow-hidden rounded-2xl border border-aws-purple/35 bg-card/75 p-3.5 shadow-xl shadow-aws-purple/10 backdrop-blur-md transition-all duration-300 hover:border-aws-purple hover:shadow-aws-purple/30 hover:-translate-y-1">
+          <div className="relative h-36 w-full overflow-hidden rounded-xl">
+            <Links3DCloud variant="flank-left" className="size-full cursor-grab active:cursor-grabbing" />
+          </div>
+          <div className="mt-2.5 text-center">
+            <span className="inline-block font-mono text-[10px] font-semibold uppercase tracking-wider text-aws-purple">
+              ☁️ {isEn ? "Cloud Architecture" : "Arquitetura Cloud"}
+            </span>
+            <p className="mt-0.5 text-xs font-semibold text-foreground">AWS sa-east-1</p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground font-mono">
+              {isEn ? "Manaus Tech Community" : "Comunidade Manaus"}
+            </p>
+          </div>
+          <div className="mt-2.5 flex flex-wrap justify-center gap-1">
+            <span className="rounded bg-aws-purple/15 px-1.5 py-0.5 font-mono text-[9px] text-aws-purple border border-aws-purple/30">Serverless</span>
+            <span className="rounded bg-aws-blue/15 px-1.5 py-0.5 font-mono text-[9px] text-aws-blue border border-aws-blue/30">Bedrock & AI</span>
+            <span className="rounded bg-aws-green/15 px-1.5 py-0.5 font-mono text-[9px] text-aws-green border border-aws-green/30">Well-Architected</span>
+          </div>
+        </div>
+      </aside>
+
+      {/* Ilha Cósmica Lateral Direita (Desktop) */}
+      <aside
+        aria-label={isEn ? "Upcoming Events & Learning Path" : "Próximos Eventos & Trilha"}
+        className="hidden xl:flex fixed right-4 2xl:right-14 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3 w-56 select-none pointer-events-auto sbg-rise"
+        style={{ animationDelay: "450ms" }}
+      >
+        <div className="relative w-full overflow-hidden rounded-2xl border border-aws-blue/35 bg-card/75 p-3.5 shadow-xl shadow-aws-blue/10 backdrop-blur-md transition-all duration-300 hover:border-aws-blue hover:shadow-aws-blue/30 hover:-translate-y-1">
+          <div className="relative h-36 w-full overflow-hidden rounded-xl">
+            <Links3DCloud variant="flank-right" className="size-full cursor-grab active:cursor-grabbing" />
+          </div>
+          <div className="mt-2.5 text-center">
+            <span className="inline-block font-mono text-[10px] font-semibold uppercase tracking-wider text-aws-blue">
+              ⚡ {isEn ? "Upcoming Events" : "Próximos Eventos"}
+            </span>
+            <p className="mt-0.5 text-xs font-semibold text-foreground">12/Dez • Mesa Redonda</p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground font-mono">
+              {isEn ? "Cloud & Certifications" : "Nuvem & Certificações"}
+            </p>
+          </div>
+          <div className="mt-2.5 flex flex-wrap justify-center gap-1">
+            <span className="rounded bg-aws-blue/15 px-1.5 py-0.5 font-mono text-[9px] text-aws-blue border border-aws-blue/30">Guga na Nuvem</span>
+            <span className="rounded bg-aws-purple/15 px-1.5 py-0.5 font-mono text-[9px] text-aws-purple border border-aws-purple/30">Josilene Silva</span>
+            <span className="rounded bg-aws-orange/15 px-1.5 py-0.5 font-mono text-[9px] text-aws-orange border border-aws-orange/30">Fametro SBG</span>
+          </div>
+        </div>
+      </aside>
 
       <main className="relative z-10 mx-auto flex max-w-lg flex-col items-center">
         {/* Header do perfil */}
-        <header className="mb-8 flex flex-col items-center text-center sbg-rise">
-          {/* Avatar com moldura de vidro e cantos pixel (Design System AWS) */}
-          <div className="relative mb-4 size-24 p-1 rounded-2xl border-2 border-aws-orange/40 bg-card shadow-lg shadow-aws-orange/15 transition-all duration-500 hover:scale-105 hover:border-aws-orange hover:shadow-aws-orange/30">
+        <header className="mb-6 flex w-full flex-col items-center text-center sbg-rise">
+          {/* Nuvem 3D Interativa com Constelação de Partículas AWS */}
+          <div className="relative w-full overflow-hidden">
+            <Links3DCloud variant="hero" className="mx-auto h-44 w-full sm:h-52 cursor-grab active:cursor-grabbing" />
+          </div>
+
+          {/* Avatar com moldura de vidro e cantos pixel no tom roxo AWS */}
+          <div className="relative mb-4 size-24 p-1 rounded-2xl border-2 border-aws-purple/40 bg-card shadow-lg shadow-aws-purple/20 transition-all duration-500 hover:scale-105 hover:border-aws-purple hover:shadow-aws-purple/40 px-purple">
             <span className="px-corner px-tl" aria-hidden="true" />
             <span className="px-corner px-tr" aria-hidden="true" />
             <span className="px-corner px-bl" aria-hidden="true" />
@@ -225,7 +256,7 @@ export function LinksView({ locale }: LinksViewProps) {
           <div className="mb-2 flex items-center gap-2 sbg-float">
             <Badge
               variant="outline"
-              className="border-aws-orange/60 font-mono text-xs text-aws-orange shadow-[0_0_12px_rgba(255,153,0,0.2)]"
+              className="border-aws-purple/60 font-mono text-xs text-aws-purple shadow-[0_0_12px_rgba(173,92,255,0.25)]"
             >
               AWS Student Builder Group
             </Badge>
@@ -264,7 +295,7 @@ export function LinksView({ locale }: LinksViewProps) {
                 rel={item.external ? "noopener noreferrer" : undefined}
                 className={`group relative flex items-center justify-between gap-4 rounded-xl border p-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg sbg-rise ${
                   item.highlight
-                    ? "border-aws-orange bg-aws-orange/10 shadow-lg shadow-aws-orange/20 hover:border-aws-orange hover:bg-aws-orange/15 hover:shadow-aws-orange/30"
+                    ? "border-aws-purple/80 bg-aws-purple/10 shadow-lg shadow-aws-purple/20 hover:border-aws-purple hover:bg-aws-purple/20 hover:shadow-aws-purple/35"
                     : `border-border/80 bg-card/85 backdrop-blur-sm ${cStyle.borderHover} ${cStyle.bgHover}`
                 }`}
                 style={{ animationDelay: `${index * 65 + 120}ms` }}
@@ -278,8 +309,8 @@ export function LinksView({ locale }: LinksViewProps) {
                     aria-hidden="true"
                     className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center"
                   >
-                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-aws-orange opacity-75" />
-                    <span className="relative inline-flex size-2.5 rounded-full bg-aws-orange shadow-[0_0_8px_#FF9900]" />
+                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-aws-purple opacity-75" />
+                    <span className="relative inline-flex size-2.5 rounded-full bg-aws-purple shadow-[0_0_8px_#AD5CFF]" />
                   </span>
                 )}
 
@@ -287,7 +318,7 @@ export function LinksView({ locale }: LinksViewProps) {
                   <div
                     className={`flex size-11 shrink-0 items-center justify-center rounded-lg border transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3 ${
                       item.highlight
-                        ? "border-aws-orange/50 bg-aws-orange/20 text-aws-orange shadow-[0_0_12px_rgba(255,153,0,0.25)]"
+                        ? "border-aws-purple/50 bg-aws-purple/20 text-aws-purple shadow-[0_0_12px_rgba(173,92,255,0.25)]"
                         : `${cStyle.iconBox} ${cStyle.iconBoxHover}`
                     }`}
                   >
@@ -310,7 +341,7 @@ export function LinksView({ locale }: LinksViewProps) {
                       variant={item.highlight ? "default" : "outline"}
                       className={`hidden text-[10px] sm:inline-flex ${
                         item.highlight
-                          ? "bg-aws-orange text-black font-semibold hover:bg-aws-orange shadow-sm"
+                          ? "bg-aws-purple text-black font-semibold hover:bg-aws-purple shadow-sm"
                           : "border-border text-muted-foreground group-hover:border-current"
                       }`}
                     >
@@ -343,7 +374,7 @@ export function LinksView({ locale }: LinksViewProps) {
           <div className="mt-4">
             <a
               href={asset(isEn ? "/en/" : "/")}
-              className="font-mono text-xs text-aws-orange underline-offset-4 hover:underline transition-colors hover:text-aws-orange/80"
+              className="font-mono text-xs text-aws-purple underline-offset-4 hover:underline transition-colors hover:text-aws-purple/80"
             >
               ← {isEn ? "Back to main website" : "Voltar para o site principal"}
             </a>

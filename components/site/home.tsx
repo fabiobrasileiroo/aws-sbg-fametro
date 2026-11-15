@@ -75,13 +75,15 @@ export function HomePage({ locale }: { locale: Locale }) {
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/20" />
           <div data-blur-bg className="relative isolate mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_1fr] md:py-28">
             <div className="relative isolate flex flex-col gap-6">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline" className="w-fit">{t.hero.badge}</Badge>
+              <div className="flex flex-wrap items-center gap-2 max-w-full">
+                <Badge variant="outline" className="w-fit shrink-0">{t.hero.badge}</Badge>
                 {"encontroOnline" in site && site.encontroOnline && (
-                  <a href="#evento" className="inline-flex">
-                    <Badge variant="secondary" className="border-aws-orange/40 text-aws-orange transition hover:border-aws-orange">
-                      {pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)} • {pick(locale, site.encontroOnline.data, site.encontroOnline.data_en)}
-                    </Badge>
+                  <a href="#evento" className="inline-flex max-w-full">
+                    <span className="inline-flex h-auto max-w-full flex-wrap items-center gap-1.5 rounded-sm border border-aws-purple/50 bg-aws-purple/10 px-2.5 py-1 text-xs font-medium text-aws-purple transition hover:border-aws-purple hover:bg-aws-purple/20">
+                      <span className="font-semibold shrink-0">⚡ {locale === "en" ? "Next Event:" : "Próximo Evento:"}</span>
+                      <span className="break-words font-medium">{pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)}</span>
+                      <span className="shrink-0 font-mono text-[11px] text-muted-foreground">• {pick(locale, site.encontroOnline.data, site.encontroOnline.data_en)}</span>
+                    </span>
                   </a>
                 )}
               </div>
@@ -210,49 +212,49 @@ export function HomePage({ locale }: { locale: Locale }) {
           </ul>
           <div id="evento" data-reveal className="scroll-mt-24 flex flex-col gap-8">
             {"encontroOnline" in site && site.encontroOnline && (
-              <Card className="overflow-hidden border-aws-orange/40 bg-card/80 backdrop-blur-xs">
-                <div className="h-2 w-full bg-aws-orange" aria-hidden="true" />
+              <Card className="overflow-hidden border-aws-purple/50 bg-card/80 backdrop-blur-xs">
+                <div className="h-2 w-full bg-gradient-to-r from-aws-purple via-aws-blue to-aws-purple" aria-hidden="true" />
                 <CardHeader className="flex flex-col gap-3">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary" className="border-aws-orange/50 text-aws-orange font-semibold">
+                    <Badge variant="secondary" className="border-aws-purple/50 text-aws-purple font-semibold">
                       {pick(locale, site.encontroOnline.data, site.encontroOnline.data_en)}
                     </Badge>
                     <Badge variant="outline">
                       {locale === "en" ? "100% Online • Free & Open" : "100% Online • Aberto e Gratuito"}
                     </Badge>
                   </div>
-                  <CardTitle className="font-heading text-2xl md:text-3xl">
+                  <CardTitle className="font-heading text-xl sm:text-2xl md:text-3xl break-words">
                     {pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)}
                   </CardTitle>
-                  <CardDescription className="text-base leading-relaxed text-muted-foreground">
+                  <CardDescription className="text-base leading-relaxed text-muted-foreground break-words">
                     {pick(locale, site.encontroOnline.descricao, site.encontroOnline.descricao_en)}
                   </CardDescription>
                 </CardHeader>
                 {site.encontroOnline.convidados && site.encontroOnline.convidados.length > 0 && (
                   <CardContent className="flex flex-col gap-4">
-                    <p className="font-heading text-xs font-semibold uppercase tracking-widest text-aws-orange">
+                    <p className="font-heading text-xs font-semibold uppercase tracking-widest text-aws-purple">
                       {locale === "en" ? "Special Guests" : "Convidados Especiais"}
                     </p>
                     <div className="grid gap-4 sm:grid-cols-2">
                       {site.encontroOnline.convidados.map((c) => (
-                        <div key={c.nome} className="flex items-center gap-4 rounded-lg border border-border/60 bg-muted/30 p-3">
+                        <div key={c.nome} className="flex items-center gap-3.5 rounded-lg border border-border/60 bg-muted/30 p-3 min-w-0">
                           {c.foto ? (
                             <img loading="lazy" decoding="async" src={asset(c.foto)} alt="" className="size-14 rounded-full object-cover shrink-0 border border-border" />
                           ) : (
-                            <div className="flex size-14 items-center justify-center rounded-full bg-aws-orange/20 text-aws-orange font-bold text-lg shrink-0">
+                            <div className="flex size-14 items-center justify-center rounded-full bg-aws-purple/20 text-aws-purple font-bold text-lg shrink-0">
                               {c.nome.charAt(0)}
                             </div>
                           )}
-                          <div className="flex min-w-0 flex-col gap-0.5">
-                            <div className="flex items-center gap-2">
-                              <strong className="text-base text-foreground truncate">{c.nome}</strong>
-                              <span className="text-xs text-muted-foreground font-mono">({pick(locale, c.origem, c.origemEn)})</span>
+                          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              <strong className="text-sm sm:text-base text-foreground truncate">{c.nome}</strong>
+                              <span className="text-xs text-muted-foreground font-mono shrink-0">({pick(locale, c.origem, c.origemEn)})</span>
                             </div>
-                            <span className="text-xs text-muted-foreground line-clamp-2">
+                            <span className="text-xs text-muted-foreground line-clamp-2 break-words">
                               {pick(locale, c.papel, c.papelEn)}
                             </span>
                             {c.link && (
-                              <ExternalLink newTab={t.newTab} href={c.link} className="text-xs font-mono text-aws-orange mt-0.5">
+                              <ExternalLink newTab={t.newTab} href={c.link} className="text-xs font-mono text-aws-purple mt-0.5 truncate block max-w-full">
                                 {shortUrl(c.link)}
                               </ExternalLink>
                             )}
@@ -262,17 +264,17 @@ export function HomePage({ locale }: { locale: Locale }) {
                     </div>
                   </CardContent>
                 )}
-                <CardFooter className="flex flex-wrap gap-3 border-t border-border/60 bg-muted/20 pt-4">
+                <CardFooter className="flex flex-col sm:flex-row flex-wrap gap-3 border-t border-border/60 bg-muted/20 pt-4">
                   <a
                     href={site.encontroOnline.meetup_url ?? site.meetup}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={buttonVariants({ size: "lg" })}
+                    className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto justify-center")}
                   >
                     <UsersThreeIcon data-icon="inline-start" /> {locale === "en" ? "RSVP on Meetup" : "Inscrever-se no Meetup"}
                     <span className="sr-only">{t.newTab}</span>
                   </a>
-                  <a href="#apresentacoes" className={buttonVariants({ size: "lg", variant: "outline" })}>
+                  <a href="#apresentacoes" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "w-full sm:w-auto justify-center")}>
                     <PlayIcon data-icon="inline-start" /> {locale === "en" ? "View Interactive Slides" : "Ver slides interativos"}
                   </a>
                 </CardFooter>
