@@ -157,10 +157,10 @@
   "encontroOnline": {
     "titulo": "Roda de Conversa: Nuvem, Carreira e Certificações AWS",
     "titulo_en": "Roundtable: Cloud, Career and AWS Certifications",
-    "data": "12 de dezembro (tarde)",
-    "data_en": "December 12 (afternoon)",
-    "descricao": "Encontro online com Guga na Nuvem (Golden Jacket) e Josilene Silva: bate-papo aberto e dinâmico sobre carreira, rotina de estudos e certificações AWS.",
-    "descricao_en": "Online meetup featuring Guga na Nuvem (Golden Jacket) and Josilene Silva: open roundtable on cloud careers, study routines, and AWS certifications.",
+    "data": "12 de dezembro • 14h às 17h (Manaus)",
+    "data_en": "December 12 • 2PM to 5PM (Manaus time)",
+    "descricao": "Encontro online de 3 horas com Guga na Nuvem (Golden Jacket) e Josilene Silva: duas palestras completas de 1h, intervalo e super roda de conversa aberta sobre carreira e certificações AWS.",
+    "descricao_en": "3-hour online event featuring Guga na Nuvem (Golden Jacket) and Josilene Silva: two full 1-hour talks, a break, and an open roundtable on cloud careers and AWS certifications.",
     "meetup_url": "https://www.meetup.com/aws-sbg-at-fametro-university-center-sede-main-campus/",
     "convidados": [
       {
@@ -180,6 +180,80 @@
         "origemEn": "Itacoatiara/AM",
         "foto": "/img/pessoas/josilene.jpg",
         "link": "https://www.linkedin.com/in/josilene-v-s-silva/"
+      }
+    ],
+    "cronograma": [
+      {
+        "hora": "14:00",
+        "duracao": "10 min",
+        "titulo": "Abertura Oficial & Boas-vindas",
+        "tituloEn": "Official Opening & Welcome",
+        "descricao": "Apresentação do AWS Student Builder Group da Fametro e introdução dos palestrantes.",
+        "descricaoEn": "Introduction to the AWS Student Builder Group at Fametro and welcoming the speakers.",
+        "tag": "Abertura",
+        "tagEn": "Opening",
+        "cor": "purple"
+      },
+      {
+        "hora": "14:10",
+        "duracao": "55 min",
+        "palestrante": "Josilene Silva",
+        "titulo": "Palestra 1: Josilene Silva",
+        "tituloEn": "Talk 1: Josilene Silva",
+        "tema": "Tema em definição (Dados & Prática em Nuvem)",
+        "temaEn": "Topic to be announced (Data & Cloud in Practice)",
+        "descricao": "Palestra completa de até 1h com cases e dicas práticas para estudantes.",
+        "descricaoEn": "Full talk up to 1h with practical cases and tips for students.",
+        "tag": "Palestra (1h)",
+        "tagEn": "Talk (1h)",
+        "cor": "blue"
+      },
+      {
+        "hora": "15:05",
+        "duracao": "10 min",
+        "titulo": "Intervalo / Coffee Break Virtual",
+        "tituloEn": "Break / Virtual Coffee",
+        "descricao": "Pausa rápida para água, café e esticar as pernas com som ambiente.",
+        "descricaoEn": "Quick break to grab water, coffee and stretch with background music.",
+        "tag": "Intervalo",
+        "tagEn": "Break",
+        "cor": "green"
+      },
+      {
+        "hora": "15:15",
+        "duracao": "55 min",
+        "palestrante": "Guga na Nuvem",
+        "titulo": "Palestra 2: Guga na Nuvem",
+        "tituloEn": "Talk 2: Guga na Nuvem",
+        "tema": "Tema em definição (Carreira & Certificações AWS)",
+        "temaEn": "Topic to be announced (AWS Career & Certifications)",
+        "descricao": "Palestra completa de até 1h abordando jornada em nuvem e mercado de certificações.",
+        "descricaoEn": "Full talk up to 1h covering cloud career paths and certification journeys.",
+        "tag": "Palestra (1h)",
+        "tagEn": "Talk (1h)",
+        "cor": "orange"
+      },
+      {
+        "hora": "16:10",
+        "duracao": "35 min",
+        "titulo": "Roda de Conversa & Perguntas do Público",
+        "tituloEn": "Open Roundtable & Audience Q&A",
+        "descricao": "Bate-papo aberto entre os 3 com perguntas e respostas ao vivo no chat.",
+        "descricaoEn": "Open discussion among the three speakers answering questions live from chat.",
+        "tag": "Mesa Redonda",
+        "tagEn": "Roundtable",
+        "cor": "purple"
+      },
+      {
+        "hora": "16:45",
+        "duracao": "15 min",
+        "titulo": "Encerramento & Foto Oficial",
+        "tituloEn": "Closing & Official Photo",
+        "descricao": "Foto oficial com câmeras abertas e spoilers do encontro presencial no CEI Senac Chapada.",
+        "descricaoEn": "Group photo with cameras on and teaser for upcoming in-person meetup at Senac Chapada.",
+        "tag": "Encerramento",
+        "tagEn": "Closing",
+        "cor": "blue"
       }
     ]
   },

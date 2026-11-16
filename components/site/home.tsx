@@ -264,6 +264,55 @@ export function HomePage({ locale }: { locale: Locale }) {
                     </div>
                   </CardContent>
                 )}
+                {"cronograma" in site.encontroOnline && site.encontroOnline.cronograma && site.encontroOnline.cronograma.length > 0 && (
+                  <CardContent className="flex flex-col gap-3 pt-0">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/50 pt-4">
+                      <p className="font-heading text-xs font-semibold uppercase tracking-widest text-aws-purple">
+                        {locale === "en" ? "Event Schedule (3 Hours)" : "Cronograma do Evento (3 Horas)"}
+                      </p>
+                      <span className="font-mono text-xs text-muted-foreground">
+                        {locale === "en" ? "2 Talks (~1h each) + Roundtable" : "2 Palestras de ~1h cada + Roda de Conversa"}
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-2.5">
+                      {site.encontroOnline.cronograma.map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/20 p-3 transition hover:border-aws-purple/40 hover:bg-muted/30"
+                        >
+                          <div className="flex items-start sm:items-center gap-3 min-w-0">
+                            <span className="shrink-0 font-mono text-xs font-semibold text-aws-purple bg-aws-purple/10 border border-aws-purple/30 rounded px-2 py-0.5">
+                              {item.hora}
+                            </span>
+                            <div className="flex flex-col min-w-0">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <strong className="text-sm font-semibold text-foreground">
+                                  {pick(locale, item.titulo, item.tituloEn)}
+                                </strong>
+                                {item.tag && (
+                                  <Badge variant="outline" className="text-[10px] py-0 h-4">
+                                    {pick(locale, item.tag, item.tagEn)}
+                                  </Badge>
+                                )}
+                              </div>
+                              {"tema" in item && item.tema && (
+                                <span className="text-xs text-aws-orange/90 font-medium italic mt-0.5">
+                                  💡 {pick(locale, item.tema, item.temaEn)}
+                                </span>
+                              )}
+                              <span className="text-xs text-muted-foreground mt-0.5">
+                                {pick(locale, item.descricao, item.descricaoEn)}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="shrink-0 font-mono text-xs text-muted-foreground sm:text-right pl-11 sm:pl-0">
+                            {item.duracao}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                )}
                 <CardFooter className="flex flex-col sm:flex-row flex-wrap gap-3 border-t border-border/60 bg-muted/20 pt-4">
                   <a
                     href={site.encontroOnline.meetup_url ?? site.meetup}
