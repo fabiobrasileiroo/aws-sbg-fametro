@@ -253,6 +253,11 @@ export function HomePage({ locale }: { locale: Locale }) {
                             <span className="text-xs text-muted-foreground line-clamp-2 break-words">
                               {pick(locale, c.papel, c.papelEn)}
                             </span>
+                            {"palestra" in c && c.palestra && (
+                              <span className="text-xs text-aws-blue font-medium line-clamp-2 mt-0.5">
+                                🎤 {pick(locale, c.palestra, c.palestraEn)}
+                              </span>
+                            )}
                             {c.link && (
                               <ExternalLink newTab={t.newTab} href={c.link} className="text-xs font-mono text-aws-purple mt-0.5 truncate block max-w-full">
                                 {shortUrl(c.link)}

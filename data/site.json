@@ -174,12 +174,14 @@
       },
       {
         "nome": "Josilene Silva",
-        "papel": "Profissional de Cloud • 2 certificações oficiais AWS",
-        "papelEn": "Cloud Professional • 2 official AWS Certifications",
-        "origem": "Itacoatiara/AM",
-        "origemEn": "Itacoatiara/AM",
+        "papel": "Engenheira de Software @ Santander Corretora • 2x AWS Certified (SAA + CLF)",
+        "papelEn": "Software Engineer @ Santander Corretora • 2x AWS Certified (SAA + CLF)",
+        "origem": "Tefé & Itacoatiara/AM",
+        "origemEn": "Tefé & Itacoatiara/AM",
         "foto": "/img/pessoas/josilene.jpg",
-        "link": "https://www.linkedin.com/in/josilene-v-s-silva/"
+        "link": "https://www.linkedin.com/in/josilene-v-s-silva/",
+        "palestra": "Introdução à AWS: os conceitos de nuvem que toda pessoa de tecnologia precisa conhecer",
+        "palestraEn": "Introduction to AWS: Cloud Concepts Every Tech Person Needs to Know"
       }
     ],
     "cronograma": [
@@ -200,10 +202,10 @@
         "palestrante": "Josilene Silva",
         "titulo": "Palestra 1: Josilene Silva",
         "tituloEn": "Talk 1: Josilene Silva",
-        "tema": "Tema em definição (Dados & Prática em Nuvem)",
-        "temaEn": "Topic to be announced (Data & Cloud in Practice)",
-        "descricao": "Palestra completa de até 1h com cases e dicas práticas para estudantes.",
-        "descricaoEn": "Full talk up to 1h with practical cases and tips for students.",
+        "tema": "Introdução à AWS: os conceitos de nuvem que toda pessoa de tecnologia precisa conhecer",
+        "temaEn": "Introduction to AWS: Cloud Concepts Every Tech Person Needs to Know",
+        "descricao": "O que é nuvem, onde ficam os servidores, alta disponibilidade, principais serviços, segurança, custos e preparação para o Cloud Practitioner com recursos gratuitos.",
+        "descricaoEn": "What cloud is, AWS infrastructure, high availability, core services, security, billing, and how to study for Cloud Practitioner using free resources.",
         "tag": "Palestra (1h)",
         "tagEn": "Talk (1h)",
         "cor": "blue"
