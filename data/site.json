@@ -164,24 +164,48 @@
     "meetup_url": "https://www.meetup.com/aws-sbg-at-fametro-university-center-sede-main-campus/",
     "convidados": [
       {
+        "nome": "Josilene Silva",
+        "papel": "Engenheira de Software @ Santander Corretora • 2x AWS Certified",
+        "papelEn": "Software Engineer @ Santander Corretora • 2x AWS Certified",
+        "origem": "Tefé & Itacoatiara/AM",
+        "origemEn": "Tefé & Itacoatiara/AM",
+        "foto": "/img/pessoas/josilene.jpg",
+        "link": "https://www.linkedin.com/in/josilene-v-s-silva/",
+        "tags": [
+          "Santander Corretora",
+          "2x AWS Certified (SAA + CLF)",
+          "Escola da Nuvem",
+          "UFAM & IFAM"
+        ],
+        "bio": "Engenheira de Software na Santander Corretora, onde atua no desenvolvimento full-stack de sistemas financeiros de alta criticidade. Com 6 anos de experiência, possui duas certificações AWS: Cloud Practitioner e Solutions Architect Associate. É pós-graduada em Arquitetura de Soluções pela PUCPR, graduada em Sistemas de Informação pela UFAM/ICET e técnica em Informática pelo IFAM Tefé. Foi mentora voluntária de certificação AWS e hackathons pela Escola da Nuvem.",
+        "bioEn": "Software Engineer at Santander Corretora developing high-criticality full-stack financial systems. With 6 years of experience, she holds two AWS certifications: Cloud Practitioner and Solutions Architect Associate. Post-graduate in Solutions Architecture from PUCPR, B.S. in Information Systems from UFAM/ICET, and tech degree from IFAM Tefé. Former volunteer mentor for AWS certifications and hackathons at Escola da Nuvem.",
+        "palestra": "Introdução à AWS: os conceitos de nuvem que toda pessoa de tecnologia precisa conhecer",
+        "palestraEn": "Introduction to AWS: Cloud Concepts Every Tech Person Needs to Know",
+        "palestraStatus": "confirmada",
+        "palestraDescricao": "Computação em nuvem está em quase toda vaga de tecnologia, mas por onde começar? Nesta palestra, apresento de forma acessível o que é a nuvem, onde ficam os computadores da AWS e como eles mantêm os sistemas no ar mesmo quando algo falha. Também mostro os principais serviços que quase todo sistema usa, como manter tudo seguro e como funciona a cobrança. No final, mostro como se preparar para a AWS Cloud Practitioner, a certificação de entrada da AWS, usando recursos gratuitos.",
+        "palestraDescricaoEn": "Cloud computing is in almost every tech role today, but where to begin? In this talk, I present an accessible overview of what cloud is, where AWS data centers are located, and how systems maintain high availability even during outages. I cover the core services nearly every system relies on, how to keep environments secure, and how billing works. Finally, I show how to prepare for the AWS Cloud Practitioner certification using free resources."
+      },
+      {
         "nome": "Guga na Nuvem",
         "papel": "AWS Golden Jacket (12/12) • AWS Community Builder",
         "papelEn": "AWS Golden Jacket (12/12) • AWS Community Builder",
         "origem": "Brasília/DF",
         "origemEn": "Brasília/DF",
         "foto": "/img/pessoas/guganauvem.jpg",
-        "link": "https://www.linkedin.com/in/gugananuvem"
-      },
-      {
-        "nome": "Josilene Silva",
-        "papel": "Engenheira de Software @ Santander Corretora • 2x AWS Certified (SAA + CLF)",
-        "papelEn": "Software Engineer @ Santander Corretora • 2x AWS Certified (SAA + CLF)",
-        "origem": "Tefé & Itacoatiara/AM",
-        "origemEn": "Tefé & Itacoatiara/AM",
-        "foto": "/img/pessoas/josilene.jpg",
-        "link": "https://www.linkedin.com/in/josilene-v-s-silva/",
-        "palestra": "Introdução à AWS: os conceitos de nuvem que toda pessoa de tecnologia precisa conhecer",
-        "palestraEn": "Introduction to AWS: Cloud Concepts Every Tech Person Needs to Know"
+        "link": "https://www.linkedin.com/in/gugananuvem",
+        "tags": [
+          "AWS Golden Jacket (12/12)",
+          "AWS Community Builder",
+          "Arquiteto AWS",
+          "Criador de Conteúdo"
+        ],
+        "bio": "Arquiteto de Soluções com mais de 10 anos de experiência em computação em nuvem e detentor da prestigiada jaqueta dourada da AWS (AWS Golden Jacket, tendo conquistado todas as 12 certificações ativas da AWS). É AWS Community Builder e criador do canal Guga na Nuvem, referência nacional em arquitetura, práticas de mercado e preparação para certificações.",
+        "bioEn": "Solutions Architect with over 10 years of experience in cloud computing and holder of the prestigious AWS Golden Jacket (having achieved all 12 active AWS certifications). AWS Community Builder and creator of the Guga na Nuvem channel, a national reference in cloud architecture, market practices, and certification guidance.",
+        "palestra": "Tema em definição (Carreira, Prática & Certificações AWS)",
+        "palestraEn": "Topic to be announced (AWS Career, Hands-on & Certifications)",
+        "palestraStatus": "em_breve",
+        "palestraDescricao": "Palestra completa de até 1h abordando jornada prática em computação em nuvem, estratégia para conquista de certificações e como se posicionar no mercado de tecnologia.",
+        "palestraDescricaoEn": "Full 1-hour talk sharing real-world cloud journeys, certification strategies, and how to stand out in the technology job market."
       }
     ],
     "cronograma": [

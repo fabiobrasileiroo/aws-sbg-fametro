@@ -1,6 +1,23 @@
 /* eslint-disable @next/next/no-img-element -- export estático para o GitHub Pages: imagens servidas direto de public/ */
 import { preload } from "react-dom"
-import { ArrowSquareOutIcon, BuildingsIcon, CertificateIcon, CloudIcon, DeviceMobileIcon, PlayIcon, UsersThreeIcon } from "@phosphor-icons/react/ssr"
+import {
+  ArrowSquareOutIcon,
+  BuildingsIcon,
+  CameraIcon,
+  CertificateIcon,
+  ChatCenteredDotsIcon,
+  ClockIcon,
+  CloudIcon,
+  CoffeeIcon,
+  DeviceMobileIcon,
+  LinkedinLogoIcon,
+  MapPinIcon,
+  MicrophoneStageIcon,
+  PlayIcon,
+  SealCheckIcon,
+  SparkleIcon,
+  UsersThreeIcon,
+} from "@phosphor-icons/react/ssr"
 
 import { ExternalLink } from "@/components/site/external-link"
 import { GoToTop } from "@/components/site/go-to-top"
@@ -37,6 +54,15 @@ const jsonLd = (locale: Locale) => ({
 })
 
 const NIVEL_COR = ["bg-[#8D99A8]", "bg-aws-blue", "bg-aws-green", "bg-aws-purple"]
+
+const timelineIcons = [
+  { icon: SparkleIcon, color: "text-aws-purple", border: "border-aws-purple/50", bg: "bg-aws-purple/10" },
+  { icon: MicrophoneStageIcon, color: "text-aws-blue", border: "border-aws-blue/50", bg: "bg-aws-blue/10" },
+  { icon: CoffeeIcon, color: "text-aws-green", border: "border-aws-green/50", bg: "bg-aws-green/10" },
+  { icon: MicrophoneStageIcon, color: "text-aws-orange", border: "border-aws-orange/50", bg: "bg-aws-orange/10" },
+  { icon: ChatCenteredDotsIcon, color: "text-aws-purple", border: "border-aws-purple/50", bg: "bg-aws-purple/10" },
+  { icon: CameraIcon, color: "text-aws-blue", border: "border-aws-blue/50", bg: "bg-aws-blue/10" },
+]
 
 const iniciais = (nome: string) =>
   nome.replace(/^Prof\.\s*/, "").split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join("")
@@ -212,125 +238,260 @@ export function HomePage({ locale }: { locale: Locale }) {
           </ul>
           <div id="evento" data-reveal className="scroll-mt-24 flex flex-col gap-8">
             {"encontroOnline" in site && site.encontroOnline && (
-              <Card className="overflow-hidden border-aws-purple/50 bg-card/80 backdrop-blur-xs">
-                <div className="h-2 w-full bg-gradient-to-r from-aws-purple via-aws-blue to-aws-purple" aria-hidden="true" />
-                <CardHeader className="flex flex-col gap-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary" className="border-aws-purple/50 text-aws-purple font-semibold">
+              <Card className="relative overflow-hidden border border-aws-purple/40 bg-card/90 shadow-2xl backdrop-blur-md">
+                <div className="h-1.5 w-full bg-gradient-to-r from-aws-purple via-aws-blue to-aws-orange" aria-hidden="true" />
+                <CardHeader className="flex flex-col gap-4 p-5 sm:p-8">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-aws-purple/40 bg-aws-purple/10 px-3 py-1 text-xs font-semibold text-aws-purple">
+                      <span className="relative flex size-2">
+                        <span className="absolute inline-flex size-full animate-ping rounded-full bg-aws-purple opacity-75" />
+                        <span className="relative inline-flex size-2 rounded-full bg-aws-purple" />
+                      </span>
+                      {locale === "en" ? "Special Edition • 3 Hours" : "Edição Especial • 3 Horas"}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-muted/40 px-3 py-1 font-mono text-xs text-foreground/90">
+                      <ClockIcon className="size-3.5 text-aws-blue" />
                       {pick(locale, site.encontroOnline.data, site.encontroOnline.data_en)}
-                    </Badge>
-                    <Badge variant="outline">
-                      {locale === "en" ? "100% Online • Free & Open" : "100% Online • Aberto e Gratuito"}
-                    </Badge>
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-border/80 bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+                      {locale === "en" ? "100% Online • Google Meet • Free" : "100% Online • Google Meet • Gratuito"}
+                    </span>
                   </div>
-                  <CardTitle className="font-heading text-xl sm:text-2xl md:text-3xl break-words">
-                    {pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)}
-                  </CardTitle>
-                  <CardDescription className="text-base leading-relaxed text-muted-foreground break-words">
-                    {pick(locale, site.encontroOnline.descricao, site.encontroOnline.descricao_en)}
-                  </CardDescription>
+                  <div className="flex flex-col gap-2">
+                    <CardTitle className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground break-words">
+                      {pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)}
+                    </CardTitle>
+                    <CardDescription className="text-base sm:text-lg leading-relaxed text-muted-foreground break-words max-w-3xl">
+                      {pick(locale, site.encontroOnline.descricao, site.encontroOnline.descricao_en)}
+                    </CardDescription>
+                  </div>
                 </CardHeader>
+
                 {site.encontroOnline.convidados && site.encontroOnline.convidados.length > 0 && (
-                  <CardContent className="flex flex-col gap-4">
-                    <p className="font-heading text-xs font-semibold uppercase tracking-widest text-aws-purple">
-                      {locale === "en" ? "Special Guests" : "Convidados Especiais"}
-                    </p>
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      {site.encontroOnline.convidados.map((c) => (
-                        <div key={c.nome} className="flex items-center gap-3.5 rounded-lg border border-border/60 bg-muted/30 p-3 min-w-0">
-                          {c.foto ? (
-                            <img loading="lazy" decoding="async" src={asset(c.foto)} alt="" className="size-14 rounded-full object-cover shrink-0 border border-border" />
-                          ) : (
-                            <div className="flex size-14 items-center justify-center rounded-full bg-aws-purple/20 text-aws-purple font-bold text-lg shrink-0">
-                              {c.nome.charAt(0)}
-                            </div>
-                          )}
-                          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                            <div className="flex flex-wrap items-center gap-1.5">
-                              <strong className="text-sm sm:text-base text-foreground truncate">{c.nome}</strong>
-                              <span className="text-xs text-muted-foreground font-mono shrink-0">({pick(locale, c.origem, c.origemEn)})</span>
-                            </div>
-                            <span className="text-xs text-muted-foreground line-clamp-2 break-words">
-                              {pick(locale, c.papel, c.papelEn)}
-                            </span>
-                            {"palestra" in c && c.palestra && (
-                              <span className="text-xs text-aws-blue font-medium line-clamp-2 mt-0.5">
-                                🎤 {pick(locale, c.palestra, c.palestraEn)}
-                              </span>
-                            )}
-                            {c.link && (
-                              <ExternalLink newTab={t.newTab} href={c.link} className="text-xs font-mono text-aws-purple mt-0.5 truncate block max-w-full">
-                                {shortUrl(c.link)}
-                              </ExternalLink>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                )}
-                {"cronograma" in site.encontroOnline && site.encontroOnline.cronograma && site.encontroOnline.cronograma.length > 0 && (
-                  <CardContent className="flex flex-col gap-3 pt-0">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/50 pt-4">
-                      <p className="font-heading text-xs font-semibold uppercase tracking-widest text-aws-purple">
-                        {locale === "en" ? "Event Schedule (3 Hours)" : "Cronograma do Evento (3 Horas)"}
-                      </p>
-                      <span className="font-mono text-xs text-muted-foreground">
-                        {locale === "en" ? "2 Talks (~1h each) + Roundtable" : "2 Palestras de ~1h cada + Roda de Conversa"}
+                  <CardContent className="flex flex-col gap-6 px-5 sm:px-8 pt-0">
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-t border-border/60 pt-6">
+                      <div>
+                        <p className="font-heading text-xs font-bold uppercase tracking-widest text-aws-purple">
+                          {locale === "en" ? "Special Guests & Keynotes" : "Convidados Especiais & Keynotes"}
+                        </p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                          {locale === "en"
+                            ? "Industry leaders sharing real-world cloud practices & career insights"
+                            : "Especialistas do mercado compartilhando prática real de nuvem e dicas de carreira"}
+                        </p>
+                      </div>
+                      <span className="font-mono text-xs text-muted-foreground shrink-0">
+                        {site.encontroOnline.convidados.length} {locale === "en" ? "confirmed speakers" : "palestrantes confirmados"}
                       </span>
                     </div>
-                    <div className="flex flex-col gap-2.5">
-                      {site.encontroOnline.cronograma.map((item, idx) => (
+
+                    <div className="grid gap-6 lg:grid-cols-2">
+                      {site.encontroOnline.convidados.map((c) => (
                         <div
-                          key={idx}
-                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg border border-border/60 bg-muted/20 p-3 transition hover:border-aws-purple/40 hover:bg-muted/30"
+                          key={c.nome}
+                          className="group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-gradient-to-b from-card via-card/95 to-muted/20 p-5 sm:p-6 transition-all duration-300 hover:border-aws-purple/60 hover:shadow-xl hover:shadow-aws-purple/5"
                         >
-                          <div className="flex items-start sm:items-center gap-3 min-w-0">
-                            <span className="shrink-0 font-mono text-xs font-semibold text-aws-purple bg-aws-purple/10 border border-aws-purple/30 rounded px-2 py-0.5">
-                              {item.hora}
-                            </span>
-                            <div className="flex flex-col min-w-0">
-                              <div className="flex flex-wrap items-center gap-2">
-                                <strong className="text-sm font-semibold text-foreground">
-                                  {pick(locale, item.titulo, item.tituloEn)}
+                          <div className="flex flex-col gap-4">
+                            <div className="flex items-start gap-4">
+                              <div className="relative size-20 sm:size-24 rounded-2xl overflow-hidden ring-2 ring-border/80 group-hover:ring-aws-purple/60 transition-all shrink-0 shadow-md">
+                                {c.foto ? (
+                                  <img
+                                    loading="lazy"
+                                    decoding="async"
+                                    src={asset(c.foto)}
+                                    alt={c.nome}
+                                    className="size-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  />
+                                ) : (
+                                  <div className="flex size-full items-center justify-center bg-aws-purple/20 text-aws-purple font-bold text-2xl">
+                                    {c.nome.charAt(0)}
+                                  </div>
+                                )}
+                                <div className="absolute bottom-1 right-1 rounded-full bg-background/90 p-0.5 shadow-xs">
+                                  <SealCheckIcon className="size-4 text-aws-blue" weight="fill" />
+                                </div>
+                              </div>
+
+                              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                <strong className="text-lg sm:text-xl font-heading font-bold text-foreground truncate">
+                                  {c.nome}
                                 </strong>
-                                {item.tag && (
-                                  <Badge variant="outline" className="text-[10px] py-0 h-4">
-                                    {pick(locale, item.tag, item.tagEn)}
-                                  </Badge>
+                                <div className="flex items-center gap-1 text-xs text-muted-foreground font-mono">
+                                  <MapPinIcon className="size-3.5 text-aws-orange shrink-0" />
+                                  <span>{pick(locale, c.origem, c.origemEn)}</span>
+                                </div>
+                                <span className="text-xs sm:text-sm font-medium text-foreground/85 line-clamp-2 mt-0.5">
+                                  {pick(locale, c.papel, c.papelEn)}
+                                </span>
+                                {c.link && (
+                                  <ExternalLink
+                                    newTab={t.newTab}
+                                    href={c.link}
+                                    className="inline-flex items-center gap-1 text-xs font-mono text-aws-purple hover:underline mt-1 w-fit"
+                                  >
+                                    <LinkedinLogoIcon className="size-3.5" />
+                                    <span>LinkedIn</span>
+                                    <ArrowSquareOutIcon className="size-3 opacity-70" />
+                                  </ExternalLink>
                                 )}
                               </div>
-                              {"tema" in item && item.tema && (
-                                <span className="text-xs text-aws-orange/90 font-medium italic mt-0.5">
-                                  💡 {pick(locale, item.tema, item.temaEn)}
-                                </span>
-                              )}
-                              <span className="text-xs text-muted-foreground mt-0.5">
-                                {pick(locale, item.descricao, item.descricaoEn)}
-                              </span>
                             </div>
+
+                            {"tags" in c && Array.isArray(c.tags) && c.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 pt-1">
+                                {c.tags.map((tag: string) => (
+                                  <span
+                                    key={tag}
+                                    className="inline-flex items-center rounded-md border border-border/70 bg-muted/50 px-2 py-0.5 text-[11px] font-medium text-muted-foreground"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+
+                            {"bio" in c && c.bio && (
+                              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed pt-3 border-t border-border/40">
+                                {pick(locale, c.bio, c.bioEn)}
+                              </p>
+                            )}
                           </div>
-                          <span className="shrink-0 font-mono text-xs text-muted-foreground sm:text-right pl-11 sm:pl-0">
-                            {item.duracao}
-                          </span>
+
+                          {"palestra" in c && c.palestra && (
+                            <div className="mt-4 rounded-xl border border-border/70 bg-muted/30 p-4 transition hover:border-aws-purple/40">
+                              <div className="flex items-center gap-1.5">
+                                {"palestraStatus" in c && c.palestraStatus === "confirmada" ? (
+                                  <span className="inline-flex items-center gap-1 rounded-full border border-aws-blue/40 bg-aws-blue/10 px-2.5 py-0.5 text-[11px] font-semibold text-aws-blue">
+                                    <MicrophoneStageIcon className="size-3" />
+                                    {locale === "en" ? "Confirmed Keynote (1h)" : "Palestra Confirmada (1h)"}
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 rounded-full border border-aws-orange/40 bg-aws-orange/10 px-2.5 py-0.5 text-[11px] font-semibold text-aws-orange">
+                                    <ClockIcon className="size-3" />
+                                    {locale === "en" ? "1-Hour Keynote • Topic TBA" : "Palestra de 1h • Tema em Definição"}
+                                  </span>
+                                )}
+                              </div>
+                              <h4 className="font-heading font-semibold text-sm sm:text-base text-foreground mt-2 leading-snug">
+                                {pick(locale, c.palestra, c.palestraEn)}
+                              </h4>
+                              {"palestraDescricao" in c && c.palestraDescricao && (
+                                <p className="text-xs sm:text-sm text-muted-foreground/90 mt-1.5 leading-relaxed">
+                                  {pick(locale, c.palestraDescricao, c.palestraDescricaoEn)}
+                                </p>
+                              )}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
                   </CardContent>
                 )}
-                <CardFooter className="flex flex-col sm:flex-row flex-wrap gap-3 border-t border-border/60 bg-muted/20 pt-4">
-                  <a
-                    href={site.encontroOnline.meetup_url ?? site.meetup}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto justify-center")}
-                  >
-                    <UsersThreeIcon data-icon="inline-start" /> {locale === "en" ? "RSVP on Meetup" : "Inscrever-se no Meetup"}
-                    <span className="sr-only">{t.newTab}</span>
-                  </a>
-                  <a href="#apresentacoes" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "w-full sm:w-auto justify-center")}>
-                    <PlayIcon data-icon="inline-start" /> {locale === "en" ? "View Interactive Slides" : "Ver slides interativos"}
-                  </a>
+
+                {"cronograma" in site.encontroOnline && site.encontroOnline.cronograma && site.encontroOnline.cronograma.length > 0 && (
+                  <CardContent className="flex flex-col gap-6 px-5 sm:px-8 pt-0">
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-8">
+                      <div>
+                        <p className="font-heading text-xs font-bold uppercase tracking-widest text-aws-purple">
+                          {locale === "en" ? "Official Schedule (3 Hours)" : "Programação Oficial (3 Horas)"}
+                        </p>
+                        <h3 className="font-heading text-lg sm:text-xl font-bold text-foreground mt-0.5">
+                          {locale === "en" ? "Event Timeline • 14:00 to 17:00 AMT" : "Linha do Tempo Oficial • 14h às 17h AMT"}
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/40 px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
+                          <ClockIcon className="size-3 text-aws-purple" />
+                          {locale === "en" ? "15:00 to 18:00 BRT" : "15h às 18h Brasília (BRT)"}
+                        </span>
+                        <span className="inline-flex items-center rounded-md border border-aws-purple/30 bg-aws-purple/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-aws-purple">
+                          6 {locale === "en" ? "blocks" : "blocos"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="relative flex flex-col gap-4 sm:gap-5 pl-7 sm:pl-9 before:absolute before:bottom-4 before:left-3.5 sm:before:left-4 before:top-4 before:w-0.5 before:bg-gradient-to-b before:from-aws-purple before:via-aws-blue before:to-aws-purple/20">
+                      {site.encontroOnline.cronograma.map((item, idx) => {
+                        const meta = timelineIcons[idx % timelineIcons.length]
+                        const NodeIcon = meta.icon
+
+                        return (
+                          <div key={idx} className="group relative">
+                            <div
+                              className={cn(
+                                "absolute -left-7 sm:-left-9 mt-1 flex size-7 sm:size-8 items-center justify-center rounded-full border-2 bg-background shadow-xs transition-transform duration-200 group-hover:scale-110",
+                                meta.border,
+                                meta.bg,
+                                meta.color
+                              )}
+                              aria-hidden="true"
+                            >
+                              <NodeIcon className="size-3.5 sm:size-4" weight="bold" />
+                            </div>
+
+                            <div className="flex flex-col gap-2 rounded-xl border border-border/70 bg-card/70 p-4 sm:p-5 transition-all duration-200 hover:border-aws-purple/50 hover:bg-card/95 hover:shadow-md">
+                              <div className="flex flex-wrap items-center justify-between gap-2">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="font-mono text-xs font-bold text-foreground bg-muted border border-border px-2 py-0.5 rounded">
+                                    {item.hora}
+                                  </span>
+                                  {item.tag && (
+                                    <Badge variant="outline" className="text-[11px] font-medium py-0 h-5">
+                                      {pick(locale, item.tag, item.tagEn)}
+                                    </Badge>
+                                  )}
+                                  {"palestrante" in item && item.palestrante && (
+                                    <span className="inline-flex items-center gap-1 font-mono text-xs text-aws-purple bg-aws-purple/10 border border-aws-purple/30 rounded px-2 py-0.5">
+                                      👤 {item.palestrante}
+                                    </span>
+                                  )}
+                                </div>
+                                <span className="font-mono text-xs text-muted-foreground shrink-0">
+                                  ⏱️ {item.duracao}
+                                </span>
+                              </div>
+
+                              <strong className="text-sm sm:text-base font-semibold text-foreground">
+                                {pick(locale, item.titulo, item.tituloEn)}
+                              </strong>
+
+                              {"tema" in item && item.tema && (
+                                <div className="rounded-md border-l-2 border-aws-orange bg-aws-orange/10 px-3 py-1.5 text-xs sm:text-sm font-medium text-aws-orange/95">
+                                  💡 {pick(locale, item.tema, item.temaEn)}
+                                </div>
+                              )}
+
+                              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                                {pick(locale, item.descricao, item.descricaoEn)}
+                              </p>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </CardContent>
+                )}
+
+                <CardFooter className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-4 border-t border-border/60 bg-muted/20 p-5 sm:p-8">
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto">
+                    <a
+                      href={site.encontroOnline.meetup_url ?? site.meetup}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto justify-center bg-aws-purple hover:bg-aws-purple/90 text-white font-semibold shadow-md shadow-aws-purple/20")}
+                    >
+                      <UsersThreeIcon data-icon="inline-start" /> {locale === "en" ? "RSVP on Meetup (Free)" : "Inscrever-se no Meetup (Gratuito)"}
+                      <span className="sr-only">{t.newTab}</span>
+                    </a>
+                    <a href="#apresentacoes" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "w-full sm:w-auto justify-center")}>
+                      <PlayIcon data-icon="inline-start" /> {locale === "en" ? "View Interactive Slides" : "Ver slides interativos"}
+                    </a>
+                  </div>
+                  <p className="text-[11px] font-mono text-muted-foreground text-center sm:text-right">
+                    {locale === "en"
+                      ? "* Manaus AMT (UTC-4) • Equivalent to 15:00–18:00 Brasília (BRT, UTC-3)."
+                      : "* Fuso de Manaus AMT (UTC-4) • Correspondente às 15:00–18:00 no fuso de Brasília (BRT, UTC-3)."}
+                  </p>
                 </CardFooter>
               </Card>
             )}
