@@ -115,6 +115,13 @@ const pt = {
     disclaimer: "Comunidade estudantil do programa AWS Student Builder Groups. Este não é um site oficial da Amazon Web Services.",
   },
   toTop: "Voltar ao topo",
+  cookies: {
+    title: "Privacidade e Cookies",
+    description:
+      "Utilizamos cookies e tecnologias similares para entender o tráfego do site e melhorar a experiência da comunidade.",
+    accept: "Aceitar todos",
+    decline: "Apenas essenciais",
+  },
 }
 
 export type Dictionary = typeof pt
@@ -219,6 +226,13 @@ const en: Dictionary = {
     disclaimer: "Student community of the AWS Student Builder Groups program. This is not an official Amazon Web Services website.",
   },
   toTop: "Back to top",
+  cookies: {
+    title: "Privacy & Cookies",
+    description:
+      "We use cookies and similar technologies to measure site traffic and improve the community experience.",
+    accept: "Accept all",
+    decline: "Essential only",
+  },
 }
 
 export const dictionaries: Record<Locale, Dictionary> = { pt, en }

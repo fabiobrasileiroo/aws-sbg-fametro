@@ -2,6 +2,7 @@ import { preload } from "react-dom"
 import { Inter, JetBrains_Mono } from "next/font/google"
 
 import "@/app/globals.css"
+import { CookieConsent } from "@/components/site/cookie-consent"
 import { ThemeProvider } from "@/components/theme-provider"
 import { type Locale, htmlLang } from "@/lib/i18n"
 import { asset } from "@/lib/site"
@@ -37,7 +38,10 @@ export function RootLayout({ locale, children }: Readonly<{ locale: Locale; chil
       }
     >
       <body>
-        <ThemeProvider forcedTheme="dark">{children}</ThemeProvider>
+        <ThemeProvider forcedTheme="dark">
+          {children}
+          <CookieConsent locale={locale} />
+        </ThemeProvider>
       </body>
     </html>
   )
