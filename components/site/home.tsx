@@ -4,12 +4,14 @@ import {
   ArrowSquareOutIcon,
   BuildingsIcon,
   CameraIcon,
+  CaretDownIcon,
   CertificateIcon,
   ChatCenteredDotsIcon,
   ClockIcon,
   CloudIcon,
   CoffeeIcon,
   DeviceMobileIcon,
+  IdentificationCardIcon,
   LinkedinLogoIcon,
   MapPinIcon,
   MicrophoneStageIcon,
@@ -56,11 +58,11 @@ const jsonLd = (locale: Locale) => ({
 const NIVEL_COR = ["bg-[#8D99A8]", "bg-aws-blue", "bg-aws-green", "bg-aws-purple"]
 
 const timelineIcons = [
-  { icon: SparkleIcon, color: "text-aws-purple", border: "border-aws-purple/50", bg: "bg-aws-purple/10" },
+  { icon: SparkleIcon, color: "text-purple-300", border: "border-aws-purple/50", bg: "bg-aws-purple/15" },
   { icon: MicrophoneStageIcon, color: "text-aws-blue", border: "border-aws-blue/50", bg: "bg-aws-blue/10" },
   { icon: CoffeeIcon, color: "text-aws-green", border: "border-aws-green/50", bg: "bg-aws-green/10" },
   { icon: MicrophoneStageIcon, color: "text-aws-orange", border: "border-aws-orange/50", bg: "bg-aws-orange/10" },
-  { icon: ChatCenteredDotsIcon, color: "text-aws-purple", border: "border-aws-purple/50", bg: "bg-aws-purple/10" },
+  { icon: ChatCenteredDotsIcon, color: "text-purple-300", border: "border-aws-purple/50", bg: "bg-aws-purple/15" },
   { icon: CameraIcon, color: "text-aws-blue", border: "border-aws-blue/50", bg: "bg-aws-blue/10" },
 ]
 
@@ -105,7 +107,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                 <Badge variant="outline" className="w-fit shrink-0">{t.hero.badge}</Badge>
                 {"encontroOnline" in site && site.encontroOnline && (
                   <a href="#evento" className="inline-flex max-w-full">
-                    <span className="inline-flex h-auto max-w-full flex-wrap items-center gap-1.5 rounded-sm border border-aws-purple/50 bg-aws-purple/10 px-2.5 py-1 text-xs font-medium text-aws-purple transition hover:border-aws-purple hover:bg-aws-purple/20">
+                    <span className="inline-flex h-auto max-w-full flex-wrap items-center gap-1.5 rounded-sm border border-aws-purple/50 bg-aws-purple/15 px-2.5 py-1 text-xs font-medium text-purple-200 transition hover:border-aws-purple hover:bg-aws-purple/25">
                       <span className="font-semibold shrink-0">⚡ {locale === "en" ? "Next Event:" : "Próximo Evento:"}</span>
                       <span className="break-words font-medium">{pick(locale, site.encontroOnline.titulo, site.encontroOnline.titulo_en)}</span>
                       <span className="shrink-0 font-mono text-[11px] text-muted-foreground">• {pick(locale, site.encontroOnline.data, site.encontroOnline.data_en)}</span>
@@ -242,7 +244,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                 <div className="h-1.5 w-full bg-gradient-to-r from-aws-purple via-aws-blue to-aws-orange" aria-hidden="true" />
                 <CardHeader className="flex flex-col gap-4 p-5 sm:p-8">
                   <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-aws-purple/40 bg-aws-purple/10 px-3 py-1 text-xs font-semibold text-aws-purple">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-aws-purple/40 bg-aws-purple/15 px-3 py-1 text-xs font-semibold text-purple-200">
                       <span className="relative flex size-2">
                         <span className="absolute inline-flex size-full animate-ping rounded-full bg-aws-purple opacity-75" />
                         <span className="relative inline-flex size-2 rounded-full bg-aws-purple" />
@@ -271,7 +273,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                   <CardContent className="flex flex-col gap-6 px-5 sm:px-8 pt-0">
                     <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-t border-border/60 pt-6">
                       <div>
-                        <p className="font-heading text-xs font-bold uppercase tracking-widest text-aws-purple">
+                        <p className="font-heading text-xs font-bold uppercase tracking-widest text-purple-300">
                           {locale === "en" ? "Special Guests & Keynotes" : "Convidados Especiais & Keynotes"}
                         </p>
                         <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
@@ -327,7 +329,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                                   <ExternalLink
                                     newTab={t.newTab}
                                     href={c.link}
-                                    className="inline-flex items-center gap-1 text-xs font-mono text-aws-purple hover:underline mt-1 w-fit"
+                                    className="inline-flex items-center gap-1 text-xs font-mono text-purple-300 hover:text-white hover:underline mt-1 w-fit"
                                   >
                                     <LinkedinLogoIcon className="size-3.5" />
                                     <span>LinkedIn</span>
@@ -351,9 +353,16 @@ export function HomePage({ locale }: { locale: Locale }) {
                             )}
 
                             {"bio" in c && c.bio && (
-                              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed pt-3 border-t border-border/40">
-                                {pick(locale, c.bio, c.bioEn)}
-                              </p>
+                              <details className="group/bio pt-1 text-xs sm:text-sm">
+                                <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 rounded-md border border-border/70 bg-muted/30 px-2.5 py-1 font-mono text-xs font-medium text-purple-300 transition-colors hover:border-aws-purple/50 hover:bg-aws-purple/15 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-aws-purple select-none [&::-webkit-details-marker]:hidden">
+                                  <IdentificationCardIcon className="size-4 shrink-0 text-purple-300" />
+                                  <span>{locale === "en" ? "View mini bio" : "Mini bio completa"}</span>
+                                  <CaretDownIcon className="size-3.5 transition-transform duration-200 group-open/bio:rotate-180 text-muted-foreground" />
+                                </summary>
+                                <div className="mt-2.5 rounded-xl border border-border/60 bg-background/60 p-3.5 leading-relaxed text-muted-foreground animate-in fade-in-50 duration-200">
+                                  <p>{pick(locale, c.bio, c.bioEn)}</p>
+                                </div>
+                              </details>
                             )}
                           </div>
 
@@ -392,7 +401,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                   <CardContent className="flex flex-col gap-6 px-5 sm:px-8 pt-0">
                     <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-8">
                       <div>
-                        <p className="font-heading text-xs font-bold uppercase tracking-widest text-aws-purple">
+                        <p className="font-heading text-xs font-bold uppercase tracking-widest text-purple-300">
                           {locale === "en" ? "Official Schedule (3 Hours)" : "Programação Oficial (3 Horas)"}
                         </p>
                         <h3 className="font-heading text-lg sm:text-xl font-bold text-foreground mt-0.5">
@@ -401,10 +410,10 @@ export function HomePage({ locale }: { locale: Locale }) {
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/40 px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
-                          <ClockIcon className="size-3 text-aws-purple" />
+                          <ClockIcon className="size-3 text-purple-300" />
                           {locale === "en" ? "15:00 to 18:00 BRT" : "15h às 18h Brasília (BRT)"}
                         </span>
-                        <span className="inline-flex items-center rounded-md border border-aws-purple/30 bg-aws-purple/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-aws-purple">
+                        <span className="inline-flex items-center rounded-md border border-aws-purple/30 bg-aws-purple/15 px-2.5 py-1 font-mono text-[11px] font-semibold text-purple-200">
                           6 {locale === "en" ? "blocks" : "blocos"}
                         </span>
                       </div>
@@ -441,7 +450,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                                     </Badge>
                                   )}
                                   {"palestrante" in item && item.palestrante && (
-                                    <span className="inline-flex items-center gap-1 font-mono text-xs text-aws-purple bg-aws-purple/10 border border-aws-purple/30 rounded px-2 py-0.5">
+                                    <span className="inline-flex items-center gap-1 font-mono text-xs text-purple-200 bg-aws-purple/15 border border-aws-purple/30 rounded px-2 py-0.5">
                                       👤 {item.palestrante}
                                     </span>
                                   )}
@@ -478,7 +487,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                       href={site.encontroOnline.meetup_url ?? site.meetup}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto justify-center bg-aws-purple hover:bg-aws-purple/90 text-white font-semibold shadow-md shadow-aws-purple/20")}
+                      className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto justify-center font-semibold shadow-lg shadow-aws-purple/20")}
                     >
                       <UsersThreeIcon data-icon="inline-start" /> {locale === "en" ? "RSVP on Meetup (Free)" : "Inscrever-se no Meetup (Gratuito)"}
                       <span className="sr-only">{t.newTab}</span>
